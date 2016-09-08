@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>../icons/address-book-new-3.png</file>
+    <file>../icons/align-horizontal-center-2.png</file>
+    <file>../icons/dialog-ok-2.png</file>
+    <file>../icons/distribute-horizontal-x.png</file>
+    <file>../icons/document-new-6.png</file>
+    <file>../icons/document-open-3.png</file>
+    <file>../icons/document-properties.png</file>
+    <file>../icons/document-save-as-6.png</file>
+    <file>../icons/draw-polyline-2.png</file>
+    <file>../icons/edit-delete-6.png</file>
+    <file>../icons/edit-delete.png</file>
+    <file>../icons/exit.png</file>
+  </qresource>
+</RCC>
