@@ -1,0 +1,31 @@
+Gabbioni
+
+Is a computer program for design of small gabion dams.
+This program helps to design small gabion dams for soil conservation purposes.
+Gabbioni is not aimed to design large engineering structures.
+
+Gabbioni uses data from a comma separated values (*.csv) text file of a
+channel cross section and designs a simple gabion dam. This kind of structure
+is typically designed as a set of stepped layers. The software calculate the
+dimensions of each layer, the weir length (using hydrological data or high
+water marks on the channel cross section) and performs a stability analysis
+for the structure.
+
+Features
+
+Gabbioni is a Python application that is designed to be a graphical program
+that helps the designer the task of design a simple structure. It uses the
+GDams library, also available in this site, and other third party well known
+pieces of software such as Matplotlib and PyQt4.
+
+Requirements
+
+- Python >= 2.7
+- Matplotlib >= 1.5
+- PyQt4 >= 4.11
+
+License
+
+This program is free software, you can use or redistribute it under the terms
+of the MIT license.
+Copyright (c) 2014-2016 ecoslacker <ecoslacker@irriapps.com>.
