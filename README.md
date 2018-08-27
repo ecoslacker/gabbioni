@@ -4,9 +4,9 @@ Gabbioni is a computer program that helps in the design of small gabion dams for
 
 ## About the code
 
-This project was created in C++ language using Qt5 libraries and QtCreator. In order to compile the code yourself the libcsvdata library is necessary. For more information go to:
+This project was created in C++ language using Qt5 libraries and QtCreator. In order to compile the code yourself the `libcsvdata` library is necessary. For more information go to:
 
-(<http://www.irriapps.com/gabbioni>)
+<http://www.irriapps.com/gabbioni>
 
 
 You can find all the requiremens in this site.
@@ -14,6 +14,10 @@ You can find all the requiremens in this site.
 ## License
 
 ```
+    Gabbioni
+    Design of small gabion dams for soil conservation.
+
+    Copyright (C)
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
