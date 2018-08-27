@@ -1,0 +1,59 @@
++--------------------------+
+Sun Aug 27 15:05:12 UTC 2018
+Gabbioni v0.1 Beta is released!
+
+I'm happy to announce the new release of the Gabbioni software!
+
+After months of active development I'm ready to release to the world the new
+and improved version of the program to design small gabion dams for soil
+conservation. It has been a long path but finally the new features are getting
+ready. That is why I am releasing a Beta version in order to test the
+functions and get feedback (if there are any users out there willing to share
+their thoughts about the software). So the purpose of this release is to test
+the code and look for bugs.
+
+Some of the most exciting features are the improvements in the user interface
+and the multiplatform capabilities. They are both consequence of re-writing
+the code base in C++ and Qt libraries. The previous version of the program was
+coded in Python 2 and it was a bit difficult to get the application running
+properly by users not familiar with the language. Also the binaries were not
+as stable as expected. These problems are in the past now.
+
+The core algorithms were improved and the result is a more robust software.
+The channel cross section characterization, weir design, dimension creation
+and stability analysis algorithms were significantly improved. The Oropeza-
+Mota method is still the only option for stability analysis, but I have plans
+to include another methods for stability analysis in the future.
+
+The data input is still based in delimited text files, such as comma separated
+values (CSV) and tab delimited text files. An option to copy/paste input data
+from spreadsheet programs was added. The final reports of the analysis are
+also created in these formats. The gabion dam plans are created in DXF format.
+So it is really easy to interact with other well known software in engineering
+such as spreadsheets (Excel, Calc) and computer aided design (CAD) programs.
+
+There are a lot of features pending in the to-do list of the project. They
+will be included in the code eventually. With this version release I'm
+officially changing the status of the program to: testing.
+
+As always the program is release under the GPL license, so you can freely
+download, use and distribute the software as you wish. Please consider a
+donation if the program (or other software in this site) is useful to you.
+Creating and supporting software are highly time consuming activities and I
+have to work hard to get the programs ready. I'm not currently making money
+from my programs so a donation will be nice and motivational.
+
+Please enjoy. I'm open to any suggestions and feedback from users.
+
+====== IMPORTANT NOTE ABOUT BUGS AND ERRORS ======
+
+As this is the first release, surely there will be bugs and errors in the code
+so I don't recommend to use this program blindly. Use your own criteria when
+designing a gabion dam with Gabbioni.
+
+If you find a bug or think there are errors in some calculations made with
+Gabbioni feel free to contact me at:
+
+ecoslacker@irriapps.com <ecoslacker _at_ irriapps _dot_ com>
+
+I will fix the code as soon as possible. Enjoy!

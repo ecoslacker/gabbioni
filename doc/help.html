@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+  <meta name="qrichtext" content="1" charset="UTF-8" />
+  <style type="text/css">
+  p, li { white-space: pre-wrap; }
+  </style>
+</head>
+<body style=" font-family:'Serif'; font-size:medium; font-weight:normal; font-style:normal;">
+
+<p>Check updates and online documentation at: <a href="http://www.irriapps.com/gabbioni">irriapps.com/gabbioni</a>!</p>
+  
+<h1>Gabbioni</h1>
+
+  <h2>Description</h2>
+
+  <p>Gabbioni is a computer program that helps in the design of small gabion dams for soil conservation purposes. This program is aimed to help in dimensioning a gabion dam to retain sediments in a natural channel.  This kind of structure is typically designed as a set of stepped layers.</p>
+  <p>Warning! Gabbioni is not recommended to design or analyze large engineering structures or dams of other kind (e.g. reservoirs).</p>
+  <p>Gabbioni uses data from a comma separated values (*.csv) text file of a channel cross section and designs a simple gabion dam. The software calculate the dimensions of the dam and performs a stability analysis for the structure.</p>
+  <p><img src=":/help/doc/img/gabbioni_01.PNG" alt="Gabbioni main window" /></p>
+
+  <h2>Features</h2>
+  
+  <p>Some important features of this program are:</p>
+  <ul>
+    <li>Gabbioni is a program with graphic user interface that helps to design a simple gabion dam structure for soil conservation purposes.</li>
+    <li>Uses data from channel cross-section where the dam is going to be constructed. Is has coded a few algorithms to help in the input or estimation of the water flow in the channel.</li>
+    <li>Creates a layer based and stepped gabion dam and performs a stability analysis (using a method by López-Martínez &#038; Oropeza-Mota, 2009) to determine if the dam can hold the water and sediments in the stream.</li>
+    <li>It is an improved version of <a href="http://www.irriapps.com/dipregav/">Dipregav</a> (another program available in this site).</li>
+    <li>It is coded in C++ and uses third party libraries, such as Qt5 for graphic user interface.</li>
+    <li>It is multi platform, it can run on Windows, macOS and Linux.</li>
+  </ul>
+
+  <h2>Usage</h2>
+
+  <p>A few instructions on how to use this program are detailed in the following lines.</p>
+  
+  <h3>Preparing your data</h3>
+
+  <p>The data necessary to make the design of a gabion dam should be collected in the field.</p>
+  <p>A recommended technique is to go to the site where the gabion dam should be constructed and take data from the channel cross section using rules or measuring tape. You should have an (x, y) coordinates array. x-axis values should be segments of the channel width and y-axis values should be their corresponding depth.</p>
+  <p><img src=":/help/doc/img/gabbioni_field.jpg" alt="Collecting field data" /></p>
+  <p>Note: Gabbioni only uses data in meters, if your data has other units you should make the proper conversions.</p>
+  <p>Capture your data as a coordinates array in a spreadsheet program (like MS Excel or Libreoffice Calc) by putting the x-axis data in one column and the y-axis data in a second column. The data should be numeric values. You can make a scatter plot to visualize and check if the captured data correspond approximately to the shape of the observed channel cross section in the field. Negative values are not accepted so the depth values should appear facing up, you can invert the y-axis to fix the view. Note that the data should be a valid channel cross-section in order to get a valid design of a gabion dam.</p>
+  <p><img src=":/help/doc/img/gabbioni_excel.PNG" alt="Channel data in Excel" /></p>
+  <p>Finally, in order to use this data in Gabbioni you should have the data formatted as Comma Separated Values (CSV), which is a special type of delimited text file.</p>
+  <p>To save your data as comma separated values use the option <strong>Save as</strong> from your spreadsheet program, and then select the <strong>Comma Separated Values (.csv)</strong> option. You should not use the options <em>Macintosh Comma Separated (.csv)</em> or <em>MS-DOS Comma Separated (.csv)</em>, as these formats are a little different.</p>
+
+  <p><img src=":/help/doc/img/gabbioni_csv.PNG" alt="Saving CSV file" /></p>
+
+  <h3>Opening your data</h3>
+
+  <p>There are different options to open your data:</p>
+  <ol>
+    <li><strong>Manual input.</strong> Open the data dialog <strong>File &gt; Input data</strong> and capture the width and depth data of the channel cross-section in the table. If you have a long list of data you can use the add/remove rows buttons as required. Once the data is captured you can use the <strong>Ok</strong> button to continue. Note that the data should be a valid channel cross-section in order to get a valid design of a gabion dam.</li>
+    <li><strong>Open a file and check/modify the data.</strong> Open the data dialog <strong>File &gt; Input data</strong> and press the <strong>Open</strong> button, a dialog asking for a text file will be open. Explore and select a valid file. The program will automatically read the data in the file and, if the data is in the right format, it will be loaded to the table. Once the data is loaded you can use the <strong>Ok</strong> button to continue.</li>
+    <li><strong>Copy/paste data.</strong> Open the data dialog <strong>File &gt; Input data</strong> and just copy (<strong>Ctrl+C</strong>) data from another program like a spreadsheet (Microsoft Excel, LibreOffice Calc, etc.). Make sure you copy your data in only two columns, data in additional columns will be ignored. If you copy data from a text editor (Notepad), make sure data is tab delimited. Paste the data in the table (Using <strong>Ctrl+V</strong>), additional rows will be automatically added as required.<p><img src=":/help/doc/img/gabbioni_03.PNG" alt="Paste data" /></p></li>
+    <li><strong>Open a file directly.</strong> This option assumes you are absolutely sure the data is in the right format. To open the data of the channel cross section, use the option <strong>File &gt; Open</strong> from the menu. Then explore and select the CSV file with the channel data. Click the <strong>Open</strong> button and the data will be readed automatically.</li>
+  </ol>
+  <p>When data has the right format a valid channel cross section will appear in the program as shown in the figure.</p>
+  <p><img src=":/help/doc/img/gabbioni_04.PNG" alt="Channel cross-section" /></p>
+
+  <h3>The Simple design dialog</h3>
+
+  <p>The design of a gabion dam consist in determine the dimensions of a retaining wall made of gabions, in order to retain sediments. To design a gabion dam the <strong>Simple Design</strong> dialog should be used. To open this dialog use the <strong>Tools &gt; Simple design</strong> menu, this option is enabled after channel cross section data is loaded to Gabbioni.</p>
+  <p>The design is made considering the following criteria:</p>
+  <ol>
+    <li><strong>The geometry of the channel cross-section.</strong> The retaining wall should completely cover the channel and have enough stability to support the retained sediments in its catchment area.</li>
+    <li><strong>The water passing by the channel.</strong> The dam should have a weir or spillway large enough to safely drain the water flow (or runoff). By reducing the velocity of the flow the water can run without causing erosion in the channel or any other negative impacts on the watershed.</li>
+  </ol>
+  <p>The process consists determining the discharge of the channel. If you have a measured value you can just input the value, also you can estimate it using the rational formula or the Chezy-Manning equation. Next, you should design a weir for the dam. Once all its done the dimensions of each layer should be created. Finally, a stability analysis should be performed in order to determine is the dam will be resistant to the force of water with sediments retained.</p>
+  <p><img src=":/help/doc/img/gabbioni_09.PNG" alt="Simple design dialog" /></p>
+  <p>This dialog has four tabs: <strong>Runoff</strong>, <strong>Layers</strong>, <strong>Weir</strong> and <strong>Stability</strong>. To design a dam you should fill the fields in every tab in this order, leaving blank fields will cause the desing to be canceled.</p>
+
+  <h4>Runoff or discharge</h4>
+
+  <p>If you know the discharge value of the channel, you can just write it. If the value is unknown, you can estimate it using: i) an hydrologic approach with the rational formula or ii) the hydraulic approach with the Chezy-Manning equation and the observed water height.</p>
+
+  <h5>The rational formula</h5>
+
+  <p>The rational formula is an equation to estimate the runoff of a catchment area or watershed using its area, rainfall intensity and a coefficient. The runoff coefficient is estimated using the land use and soil type of the watershed.</p>
+  <p>The rainfall intensity is a value that implies some assumptions. First, it should be the intensity of a rain event with the same (approximate) duration as the time of concentration. Second, it should be selected according to the recommended return period of an extreme rain event. To help in the selection of the rainfall intensity value, a time of concentration calculator is included in this dialog. Please consider that a properly calculation of this value involves another formulas and calculations, this is only included as a quick help.</p>
+  <p><img src=":/help/doc/img/gabbioni_06.PNG" alt="Rational formula" /></p>
+  <p>An aditional tool to help in the calculation of the runoff coefficient is also included, you can access this dialog by pressing the tool button (the one with the three dots <strong>...</strong>).</p>
+  <p><img src=":/help/doc/img/gabbioni_06_1.PNG" alt="Runoff coefficient" /></p>
+  <p>Once all the values are selected the results are presented at the bottom of the dialog, the runoff value will be used automatically when accepting these results by pressing the <strong>OK</strong> button.</p>
+
+  <h5>The Chezy-Manning equation</h5>
+
+  <p>This method could be used when the height of the water flow is known for the channel cross-section used. Height of an extreme rain event should be used. Frequently some water marks from an extreme runoff/rain event could be observed in the channel at the time of measuring its cross section. You can measure the maximum height of this mark relative to the stream bed.</p>
+  <p><img src=":/help/doc/img/gabbioni_08.PNG" alt="Manning equation" /></p>
+  <p>The other value required is the roughness coefficient. A special dialog can be accessed by pressing the tool button <strong>...</strong>, where the user can select a value according to the hydraulic conditions of the channel. Values from the <strong>Natural streams</strong> tab are recommended. To select a value you have to click on it, you can also use a custom value.</p>
+  <p><img src=":/help/doc/img/gabbioni_07.PNG" alt="Roughness coefficient" /></p>
+
+  <h4>The gabion's height and abutment</h4>
+
+  <p>The first input value for the design process is the gabion's height. This value is the base for everything. The dam body will be assembled in layers of this height. Two initial values are included: 0.5 and 1.0 meters. These are the more frequent heights for rectangular gabion boxes and you should select one.</p>
+  <p>The abutment is the lateral excavation needed to anchor the dam body. Every layer of the dam will be inserted from both sides into the side of the channel using this value. It's one of the most important values for the structural stability of the dam. As a suggestion the same value for the gabion's height it's used, to define a more appropiate value you should consider soil properties of the stream.</p>
+  <p>As the dam body is stepped based, you should provide a step length and how often you want it to be applied. As a default the step is applied in every layer. The base layer is sometimes longer than the others to avoid falling water to impact directly in the stream and this way prevent erosion as a stilling basin would do it. The length of this layer should take into account the slope of the stream and soil properties.</p>
+  <p><img src=":/help/doc/img/gabbioni_10.PNG" alt="Gabion height and abutment" /></p>
+  <p>In this figure you can see how these values are applied in the dimensioning of the gabion dam. You can change these values freely according to your criteria and the requirements of your particular case, default values are just suggestions.</p>
+  <p><img src=":/help/doc/img/gabbioni_dam.png" alt="Some parts of a gabion dam" /></p>
+
+  <h4>Spillway/Weir</h4>
+
+  <p>An important part of the gabion dam body is a spillway. This element allows the water flow to securely pass through the dam which means minimizing its erosion effect on the channel. The spillway it's designed as a broad-crested rectangular weir for the already known (or estimated) discharge.</p>
+  <p>The user should provide the desired width of the weir and a weir coefficient. Once the weir is designed a spillway will be created in the layers of the dam. The spillway will be placed in the dam in order to cover the stream bed.</p>
+  <p><img src=":/help/doc/img/gabbioni_11.PNG" alt="Weir design" /></p>
+  <p>Finally in the last tab there are some stability coefficients and parameters, you can change these values.</p>
+  <p><img src=":/help/doc/img/gabbioni_12.PNG" alt="Stability analysis" /></p>
+
+  <h4>Dam dimensions and stability analysis</h4>
+
+  <p>Once all the data is introduced, the program will create the dimensions of each layer of the dam automatically, then a stability analysis will be performed using the method suggested by López-Martínez &#038; Oropeza-Mota (2009) to determine if the dam is stable enough.</p>
+  <p>This will be done automatically when accepting the data in the <strong>Simple design</strong> dialog by pressing the <strong>Ok</strong> button, otherwise the design will be canceled.</p>
+  <p><img src=":/help/doc/img/gabbioni_13.PNG" alt="Design results" /></p>
+
+  <h3>Create a report and some plans</h3>
+
+  <p>Reports and plans are an important part of an engineering project. Gabbioni allows you to view the results in a text delimited format using the <strong>Report</strong> dialog. This report includes all the results of each step in the design process, including the channel cross section coordinates, the runoff estimation, weir design, dam dimensioning and stability analysis.</p>
+  <p>This report has plain text formatting and all its information can be saved to CSV or tab delimited text file. This report files can be opened later in another programs such as text editors or spreadsheets.</p>
+  <p><img src=":/help/doc/img/gabbioni_14.PNG" alt="Final gabion dam" /></p>
+  <p>Also you can export the plans of the gabion dam you just designed to a DXF file, so it can be viewed in any other CAD program.</p>
+  <p><img src=":/help/doc/img/gabbioni_16.PNG" alt="Gabion dam exported to DXF" /></p>
+
+  <h2>Download</h2>
+
+  <p>To download binaries and source code for Windows, macOS and Linux please go to: <a href="http://www.irriapps.com/gabbioni">irriapps.com/gabbioni</a></p>
+
+  <h2>License</h2>
+
+  <pre>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</pre>
+</body>
+</html>

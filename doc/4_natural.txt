@@ -1,0 +1,38 @@
+Type of channel and description	Minimum	Normal	Maximum
+D. NATURAL STREAMS			
+D-1. Minor streams (top width at flood stage < 100 ft)			
+a. Streams on plain			
+  1. Clean, straight, full stage, no rifts or deep pools	0.025	0.030	0.033
+  2. Same as above, but more stones and weeds	0.030	0.035	0.040
+  3. Clean, winding, some pools and shoals	0.033	0.040	0.045
+  4. Same as above, but some weeds and stones	0.035	0.045	0.050
+  5. Sames as above, lower stages, more ineffective slopes and sections	0.040	0.048	0.055
+  6. Same as 4, but more stones	0.045	0.050	0.060
+  7. Sluggish reaches, weedy, deep pools	0.050	0.070	0.080
+  8. Very weedy reaches, deep pools, or floodways with heavy stand or timber and underbrush	0.075	0.100	0.150
+b. Mountain streams, no vegetation in channel, banks usually steep, trees and brush along banks submerged at bigh stages			
+  1. Bottom: gravels, cobbles, and few boulders	0.030	0.040	0.050
+  2. Bottom: cobbles with large boulders	0.040	0.050	0.070
+D-2. Flood plains			
+a. Pasture, no brush			
+  1. Short grass	0.025	0.030	0.035
+  2. High grass	0.030	0.035	0.05
+b. Cultivated areas			
+  1. No crop	0.020	0.030	0.040
+  2. Mature row crops	0.025	0.035	0.045
+  3. Mature field crops	0.030	0.040	0.050
+c. Brush			
+  1. Scattered brush, heavy weeds	0.035	0.050	0.070
+  2. Light brush and trees, in winter	0.035	0.050	0.060
+  3. Light brush and trees, in summer	0.040	0.060	0.080
+  4. Medium to dense brush, in winter	0.045	0.070	0.011
+  5. Medium to dense brush, in summer	0.070	0.100	0.160
+d. Trees			
+  1. Dense willows, summer, straight	0.110	0.150	0.200
+  2. Cleared land with tree stumps, no sprouts	0.030	0.040	0.050
+  3. Same as above, but with heavy growth of sprouts	0.050	0.060	0.080
+  4. Heavy stand of timber, a few down trees, little undergrowth, flood stage below branches	0.080	0.100	0.120
+  5. Same as above, but with flood stage below branches	0.100	0.120	0.160
+D-3. Major streams (top width at flood stage > 100 ft). The n value is less than that for minos streams of similar description, because banks offer less effective resistance.			
+a. Regular section with no boulders or brush	0.025		0.060
+b. Irregular and rough section	0.035		0.100

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Gabbioni</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="MyQGraphicsView" name="graphicsView"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionData"/>
+    <addaction name="actionExportDXF"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionHelp"/>
+   </widget>
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionSimpleDesign"/>
+    <addaction name="actionDimensions"/>
+    <addaction name="actionAnalysis"/>
+    <addaction name="actionEditLayers"/>
+    <addaction name="actionReport"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionPan"/>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
+    <addaction name="actionZoomOriginal"/>
+    <addaction name="actionZoomFit"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="windowTitle">
+    <string>Main tool bar</string>
+   </property>
+   <property name="toolTip">
+    <string>Main tool bar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionData"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSimpleDesign"/>
+   <addaction name="actionDimensions"/>
+   <addaction name="actionEditLayers"/>
+   <addaction name="actionAnalysis"/>
+   <addaction name="actionExportDXF"/>
+   <addaction name="actionReport"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>Navigation tool bar</string>
+   </property>
+   <property name="toolTip">
+    <string>Navigation tool bar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionPan"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="actionZoomOriginal"/>
+   <addaction name="actionZoomFit"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="windowTitle">
+    <string>Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTreeView" name="treeView"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/document-open-3.png</normaloff>:/icons/32x32/document-open-3.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a data file</string>
+   </property>
+   <property name="statusTip">
+    <string>Open a data file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/help-contents.png</normaloff>:/icons/32x32/help-contents.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+   <property name="toolTip">
+    <string>About Gabbioni</string>
+   </property>
+   <property name="statusTip">
+    <string>About Gabbioni</string>
+   </property>
+  </action>
+  <action name="actionSimpleDesign">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/applications-engineering-2.png</normaloff>:/icons/32x32/applications-engineering-2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Simple design</string>
+   </property>
+   <property name="toolTip">
+    <string>Simple dam design</string>
+   </property>
+   <property name="statusTip">
+    <string>Simple dam design</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionEditLayers">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/align-horizontal-right.png</normaloff>:/icons/32x32/align-horizontal-right.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit layers</string>
+   </property>
+   <property name="statusTip">
+    <string>Edit layers</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/zoom-out-2.png</normaloff>:/icons/32x32/zoom-out-2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom &amp;Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom out</string>
+   </property>
+   <property name="statusTip">
+    <string>Zoom out</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/zoom-in-2.png</normaloff>:/icons/32x32/zoom-in-2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom &amp;In</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom In</string>
+   </property>
+   <property name="statusTip">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionPan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/transform-move.png</normaloff>:/icons/32x32/transform-move.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Pan</string>
+   </property>
+   <property name="toolTip">
+    <string>Pan mode</string>
+   </property>
+   <property name="statusTip">
+    <string>Pan mode</string>
+   </property>
+  </action>
+  <action name="actionZoomOriginal">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/zoom-original.png</normaloff>:/icons/32x32/zoom-original.png</iconset>
+   </property>
+   <property name="text">
+    <string>Z&amp;oom 1:1</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom 1:1</string>
+   </property>
+   <property name="statusTip">
+    <string>Zoom 1:1</string>
+   </property>
+  </action>
+  <action name="actionZoomFit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/zoom-fit-best.png</normaloff>:/icons/32x32/zoom-fit-best.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom &amp;best fit</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom best fit</string>
+   </property>
+   <property name="statusTip">
+    <string>Zoom best fit</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/help.png</normaloff>:/icons/32x32/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Help &amp;topics</string>
+   </property>
+   <property name="statusTip">
+    <string>Help topics</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionDimensions">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/measure.png</normaloff>:/icons/32x32/measure.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Dimensions</string>
+   </property>
+   <property name="statusTip">
+    <string>Show layer dimensions</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionAnalysis">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/blockdevice.png</normaloff>:/icons/32x32/blockdevice.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stability analysis</string>
+   </property>
+   <property name="toolTip">
+    <string>Stability analysis</string>
+   </property>
+   <property name="statusTip">
+    <string>Show stability analysis results</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionExportDXF">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/image-vnd.dxf.png</normaloff>:/icons/32x32/image-vnd.dxf.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export to DXF</string>
+   </property>
+   <property name="toolTip">
+    <string>Export the plot to DXF</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the plot to DXF</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionReport">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/accessories-text-editor-6.png</normaloff>:/icons/32x32/accessories-text-editor-6.png</iconset>
+   </property>
+   <property name="text">
+    <string>Report</string>
+   </property>
+   <property name="toolTip">
+    <string>Show a report of the dam design</string>
+   </property>
+   <property name="statusTip">
+    <string>Show a report of the dam design</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionData">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/32x32/insert-table.png</normaloff>:/icons/32x32/insert-table.png</iconset>
+   </property>
+   <property name="text">
+    <string>Input &amp;data</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a dialog to input data</string>
+   </property>
+   <property name="statusTip">
+    <string>Open dialog to input data</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MyQGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>myqgraphicsview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

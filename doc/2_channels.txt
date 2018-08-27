@@ -1,0 +1,47 @@
+Type of channel and description	Minimum	Normal	Maximum
+B. LINED OR BUILT-UP CHANNELS			
+B-1. Metal			
+a. Smooth steel surface			
+  1. Unpainted	0.011	0.012	0.014
+  2. Painted	0.012	0.013	0.017
+b. Corrugated	0.021	0.025	0.030
+B-2. Nonmetal			
+a. Cement			
+  1. Neat, surface	0.010	0.011	0.013
+  2. Mortar	0.011	0.013	0.015
+b. Wood			
+  1. Planed, untreated	0.010	0.012	0.014
+  2. Planed, creosoted	0.011	0.012	0.015
+  3. Unplaned	0.011	0.013	0.015
+  4. Plank with battens	0.012	0.015	0.018
+  5. Lined with roofing paper	0.010	0.014	0.017
+c. Concrete			
+  1. Trowel finish	0.011	0.013	0.015
+  2. Float finish	0.013	0.015	0.016
+  3. Finished, with gravel on bottom	0.015	0.017	0.020
+  4. Unfinished	0.014	0.017	0.020
+  5. Gunite, good section	0.016	0.019	0.023
+  6. Gunite, wavy section	0.018	0.022	0.025
+  7. On good excavated rock	0.017	0.020	
+  8. On irregular excavated rock	0.022	0.027	
+d. Concrete bottom float finished with sides of			
+  1. Dressed stone in mortar	0.015	0.017	0.020
+  2. Random stone in mortar	0.017	0.020	0.024
+  3. Cement rubble masonry, plasteder	0.016	0.020	0.024
+  4. Cement rubble masonry	0.020	0.025	0.030
+  5. Dry rubble or riprap	0.020	0.030	0.035
+e. Gravel bottom with sides of			
+  1. Formed concrete	0.017	0.020	0.025
+  2. Random stone in mortar	0.020	0.023	0.026
+  3. Dry rubble or riprap	0.023	0.033	0.036
+f. Brick			
+  1. Glazed	0.011	0.013	0.015
+  2. In cement mortar	0.012	0.015	0.018
+g. Masonry			
+  1. Cemented rubble	0.017	0.025	0.030
+  2. Dry rubble	0.023	0.032	0.035
+h. Dressed ashlar	0.013	0.015	0.017
+i. Asphalt			
+  1. Smooth	0.013	0.013	
+  2. Rough	0.016	0.016	
+j. Vegetal lining	0.030		0.500

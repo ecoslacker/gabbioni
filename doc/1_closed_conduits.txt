@@ -1,0 +1,44 @@
+Type of channel and description	Minimum	Normal	Maximum
+A. CLOSED CONDUITS FLOWING PARTLY FULL			
+A-1. Metal			
+a. Brass, smooth	0.009	0.010	0.013
+b. Steel			
+  1. Lockbar and welded	0.010	0.012	0.014
+  2. Riveted and spiral	0.013	0.016	0.017
+c. Cast iron			
+  1. Coated	0.010	0.013	0.014
+  2. Uncoated	0.011	0.014	0.016
+d. Wrought iron			
+  1. Black	0.012	0.014	0.015
+  2. Galvanized	0.013	0.016	0.017
+e. Corrugated metal			
+  1. Subdrain	0.017	0.019	0.021
+  2. Storm drain	0.021	0.024	0.030
+A-2. Nonmetal			
+a. Lucite	0.008	0.009	0.010
+b. Glass	0.009	0.010	0.013
+c. Cement			
+  1.Neat, surface	0.010	0.011	0.013
+  2. Mortar	0.011	0.013	0.015
+d. Concrete			
+  1. Culvert, straight and free of debris	0.010	0.011	0.013
+  2. Culvert with bends, connections and some debris	0.011	0.013	0.014
+  3. Finished	0.011	0.012	0.014
+  4. Sewer with manholes, inlet, etc., straight	0.013	0.015	0.017
+  5. Unfinished, steel form	0.012	0.013	0.014
+  6. Unifinished, smooth wood form	0.012	0.014	0.016
+  7. Unfinished, rough wood form	0.015	0.017	0.020
+e. Wood			
+  1. Stave	0.010	0.012	0.014
+  2.Laminated, treated	0.015	0.017	0.020
+f. Clay			
+  1. Common drainage tile	0.011	0.013	0.017
+  2. Vitrified sewer	0.011	0.014	0.017
+  3. Vitrified sewer with manholes, inlet, etc.	0.013	0.015	0.017
+  4. Vitrified subdrain with open joint	0.014	0.016	0.018
+g. Brickwork			
+  1. Glazed	0.011	0.013	0.015
+  2. Lined with cement mortar	0.012	0.015	0.017
+h. Sanitary sewers coated with sewage alimes, with bends and connections	0.012	0.013	0.016
+i. Paved invert, sewer, smooth bottom	0.016	0.019	0.020
+j. Rubble masonry, cemented	0.018	0.025	0.030

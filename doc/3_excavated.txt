@@ -1,0 +1,25 @@
+Type of channel and description	Minimum	Normal	Maximum
+C. EXCAVATED OR DREDGED			
+a. Earthm straight and uniform			
+  1. Clean, recently completed	0.016	0.018	0.020
+  2. Clean, after weathering	0.018	0.022	0.025
+  3. Gravel, uniform section, clean	0.022	0.025	0.030
+  4. With short grass, few weeds	0.022	0.027	0.033
+b. Earth, winding ans sluggish			
+  1. No vegetation	0.023	0.025	0.030
+  2. Grass, some weeds	0.025	0.030	0.033
+  3. Dense weeds or aquatic plants in deep channels	0.030	0.035	0.040
+  4. Earth bottom and rubble sides	0.028	0.030	0.035
+  5. Stony bottom and weedy banks	0.025	0.035	0.040
+  6. Cobble bottom and clean sides	0.030	0.040	0.050
+c. Dragline.excavated or dredged			
+  1. No vegetation	0.025	0.028	0.033
+  2. Light brush on banks	0.035	0.050	0.060
+d. Rock cuts			
+  1. Smooth and uniform	0.025	0.035	0.040
+  2. Jagged and irregular	0.035	0.040	0.050
+e. Channels not maintained, weeds and brush uncut			
+  1. Dense weeds, high as flow depth	0.050	0.080	0.120
+  2. Clean bottom, brush on sides	0.040	0.050	0.080
+  3. Same, highest stage of flow	0.045	0.070	0.110
+  4. Dense brush, high stage	0.080	0.100	0.140

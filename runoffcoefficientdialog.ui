@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RunoffCoefficientDialog</class>
+ <widget class="QDialog" name="RunoffCoefficientDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>331</width>
+    <height>191</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Runoff coefficient</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>&amp;Land use:</string>
+       </property>
+       <property name="buddy">
+        <cstring>landUse</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="landUse">
+       <item>
+        <property name="text">
+         <string>Bare ground</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Crops</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Vegetables or temporal meadow</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Grain crops</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Grassland (75% coverage)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Grassland (50-75%)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Grassland (50%)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Forest (75% coverage)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Forest (50-75%)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Forest (25-50%)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Forest (25%)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Urban</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pathways</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Meadow</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>&amp;Soil type:</string>
+       </property>
+       <property name="buddy">
+        <cstring>soilType</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="soilType">
+       <item>
+        <property name="text">
+         <string>Pervious soil</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Semi-pervious soil</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Impervious soil</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Annual &amp;precipitation [mm]:</string>
+       </property>
+       <property name="buddy">
+        <cstring>annualPrecipitation</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="annualPrecipitation">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="calculateButton">
+       <property name="text">
+        <string>&amp;Calculate</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Runoff coefficient:</string>
+       </property>
+       <property name="buddy">
+        <cstring>runoffcoef</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="runoffcoef">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>RunoffCoefficientDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>RunoffCoefficientDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
