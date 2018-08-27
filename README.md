@@ -8,7 +8,6 @@ This project was created in C++ language using Qt5 libraries and QtCreator. In o
 
 <http://www.irriapps.com/gabbioni>
 
-
 You can find all the requiremens in this site.
 
 ## License
@@ -17,7 +16,7 @@ You can find all the requiremens in this site.
     Gabbioni
     Design of small gabion dams for soil conservation.
 
-    Copyright (C)
+    Copyright (C) Eduardo Jimenez <ecoslacker@irriapps.com>
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -29,5 +28,5 @@ You can find all the requiremens in this site.
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;`
+    along with this program. If not, see <http://www.gnu.org/licenses/>
 ```
