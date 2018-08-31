@@ -29,11 +29,9 @@ SOURCES += main.cpp\
     simpledesigndialog.cpp \
     gabiondam.cpp \
     utilities.cpp \
-    tests/interpol_tests.cpp \
     channelsection.cpp \
     weir.cpp \
     layer.cpp \
-    gabbioni.cpp \
     oropezaanalysis.cpp \
     helpdialog.cpp \
     rationalformuladialog.cpp \

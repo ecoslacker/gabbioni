@@ -242,7 +242,7 @@ void SimpleDesignDialog::designWeir()
         msgBox.exec();
 
         // Reset the weir in case it was created with previous values
-        _weir = NULL;
+        _weir = nullptr;
 
         return;
     }
@@ -268,9 +268,28 @@ void SimpleDesignDialog::designWeir()
         ui->weirLayers->clear();
 
         // Reset the weir in case it was created with previous values
-        _weir = NULL;
+        _weir = nullptr;
 
         qDebug() << "Not enough information to design weir!";
+    }
+
+    // Check weir dimensions, this assumes Weir and ChannelSection objects have the same gabion height
+    if (!_weir) {
+        // If weir is a null pointer, just return an error
+        qDebug() << "Weir is nullptr";
+    } else if (_weir->levels() >= _channel->levels() || _weir->width() >= channel()->channelWidth() || _weir->wallsHeight() >= _channel->channelWidth()) {
+        _weir = nullptr;
+
+        QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("Weir too big"));
+        msgBox.setText(tr("Weir dimensions (width or height) are too big for the channel section."));
+        msgBox.setInformativeText(tr("Please verify the weir dimensions and try again with different values."));
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+
+        qDebug() << "Weir is too large for channel cross section";
     }
 
     // Get ready some values

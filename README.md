@@ -4,11 +4,11 @@ Gabbioni is a computer program that helps in the design of small gabion dams for
 
 ## About the code
 
-This project was created in C++ language using Qt5 libraries and QtCreator. In order to compile the code yourself the `libcsvdata` library is necessary. For more information go to:
+This project was created in C++ language using Qt5 libraries and QtCreator. In order to compile the code yourself the `libcsvdata` library is necessary. You can find this code at <https://github.com/ecoslacker/libcsvdata>.
+
+For more information about the usage of this software at:
 
 <http://www.irriapps.com/gabbioni>
-
-You can find all the requiremens in this site.
 
 ## License
 

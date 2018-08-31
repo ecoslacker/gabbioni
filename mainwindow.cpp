@@ -86,22 +86,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->dockWidget->toggleViewAction()->setIcon(propertiesIcon);
     ui->menuView->addAction(ui->dockWidget->toggleViewAction());
 
-    _dec = 2;
-    _lengthUnit = "m";
-    _flowUnit = "m^3/s";
-    _volumeUnit = "m^3";
-    _weightUnit = "t";
-    _areaUnit = "m^2";
-    _sgravUnit = "t/m^3";
-
-    _strChannel = "";
-    _strFlow = "";
-    _strRational = "";
-    _strManning = "";
-    _strWeir = "";
-    _strResult = "";
-    _strDimensions = "";
-
     restartProject();
 
     // Show change log message
@@ -460,7 +444,7 @@ void MainWindow::setupChannelData(QList<QStringList> values)
     channel.setCoordY(y);
 
     // Update the coordinates in the properties panel
-    updateCoordinatesModel();
+    updatePanelCoordinates();
 }
 
 void MainWindow::simpleDesign()
@@ -611,11 +595,12 @@ void MainWindow::simpleDesign()
             // ****** Update the properties dock panel ******
 
             initializeUiTreeView();
-            updateCoordinatesModel();
-            updateChannelModel();
-            updateFlowModel();
+            updatePanelCoordinates();
+            updatePanelChannel();
+            updatePanelFlow();
+            updatePanelWeir();
 
-            createTextReport();
+            createTextReport(); // Creates text report and updates dock panel with the results of stability analysis
             showResults(_strResult, "Stability Analysis Results");
 
         } else if (!gabionDam->getMinLayersCondition()) {
@@ -631,6 +616,7 @@ void MainWindow::simpleDesign()
             msgBox.exec();
 
             restartProject();
+            updatePanelChannel();
 
         } else {
             // Another error just raised
@@ -645,6 +631,7 @@ void MainWindow::simpleDesign()
             msgBox.exec();
 
             restartProject();
+            updatePanelChannel();
         }
     } else {
         // Dam design was cancelled by user
@@ -865,7 +852,7 @@ void MainWindow::updateUiProperties()
     ui->treeView->resizeColumnToContents(0);
 }
 
-void MainWindow::updateCoordinatesModel()
+void MainWindow::updatePanelCoordinates()
 {
     // Update the properties with the channel cross-section coordinates
     QString x_coord = "{";
@@ -887,7 +874,7 @@ void MainWindow::updateCoordinatesModel()
     updateUiProperties();
 }
 
-void MainWindow::updateChannelModel()
+void MainWindow::updatePanelChannel()
 {
     /*
      * Get the channel cross-section data from the ChannelSection object
@@ -913,7 +900,7 @@ void MainWindow::updateChannelModel()
     updateUiProperties();
 }
 
-void MainWindow::updateFlowModel()
+void MainWindow::updatePanelFlow()
 {
     _properties << tr("Flow rate:")
                 << tr("Method:");
@@ -923,6 +910,28 @@ void MainWindow::updateFlowModel()
            << QString::number(_flowMethod, 'f', 0);
 
     updateUiProperties();
+}
+
+void MainWindow::updatePanelWeir()
+{
+    _properties << tr("Weir width:")
+                << tr("Weir height:")
+                << tr("Weir coefficient:")
+                << tr("Weir water head:")
+                << tr("Weir freeboard:")
+                << tr("Weir gabion layers:");
+    _values << QString::number(gabionDam->getWeir()->width(), 'f', _dec)
+            << QString::number(gabionDam->getWeir()->wallsHeight(), 'f', _dec)
+            << QString::number(gabionDam->getWeir()->coefficient(), 'f', _dec)
+            << QString::number(gabionDam->getWeir()->waterHeight(), 'f', _dec)
+            << QString::number(gabionDam->getWeir()->wallsHeight() - gabionDam->getWeir()->waterHeight(), 'f', _dec)
+            << QString::number(gabionDam->getWeir()->levels(), 'f', 0);
+    _units << _lengthUnit
+           << _lengthUnit
+           << ""
+           << _lengthUnit
+           << _lengthUnit
+           << "";
 }
 
 bool MainWindow::plotPoints()
@@ -1242,9 +1251,9 @@ void MainWindow::editLayers()
             // ****** Update the properties dock panel ******
 
             initializeUiTreeView();
-            updateCoordinatesModel();
-            updateChannelModel();
-            updateFlowModel();
+            updatePanelCoordinates();
+            updatePanelChannel();
+            updatePanelFlow();
 
             createTextReport();
             showResults(_strResult, "Stability Analysis Results");
@@ -1277,6 +1286,7 @@ void MainWindow::restartProject()
      * Stability
      *
      */
+    initializeStrings();
 
     // Clear any old dimensions
     dimensions.clear();
@@ -1301,10 +1311,29 @@ void MainWindow::restartProject()
     // Initial values
     _flowrate = 0;
 
-    mainScene->clear();
+    //mainScene->clear();
     initializeUiTreeView();
 
     statusBar()->showMessage(tr("Ready."));
+}
+
+void MainWindow::initializeStrings()
+{
+    _dec = 2;
+    _lengthUnit = "m";
+    _flowUnit = "m^3/s";
+    _volumeUnit = "m^3";
+    _weightUnit = "t";
+    _areaUnit = "m^2";
+    _sgravUnit = "t/m^3";
+
+    _strChannel = "";
+    _strFlow = "";
+    _strRational = "";
+    _strManning = "";
+    _strWeir = "";
+    _strResult = "";
+    _strDimensions = "";
 }
 
 QVector<QPointF> MainWindow::convertPoints(QList<QStringList> &stringPoints)

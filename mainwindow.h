@@ -98,9 +98,10 @@ private slots:
     void createTextReport();
     void initializeUiTreeView();
     void updateUiProperties();
-    void updateCoordinatesModel();
-    void updateChannelModel();
-    void updateFlowModel();
+    void updatePanelCoordinates();
+    void updatePanelChannel();
+    void updatePanelFlow();
+    void updatePanelWeir();
     bool plotPoints();
     bool plotChannelSection();
     bool plotPointsAndChannel();
@@ -116,6 +117,7 @@ private slots:
     void showReport();
     void editLayers();
     void restartProject();
+    void initializeStrings();
 
     void zoom(double scaleFactor);
     void zoomIn();
