@@ -73,7 +73,7 @@ SimpleDesignDialog::SimpleDesignDialog(double runoff, double gabionHeight, doubl
     // Method used for the estimation of runoff
     _methodUsed = 0;
     _methods << "None" << "Rational formula" << "Chezy-Manning equation";
-    _weir = NULL;
+    _weir = nullptr;
 }
 
 SimpleDesignDialog::~SimpleDesignDialog()
