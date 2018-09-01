@@ -33,6 +33,7 @@
         <file>icons/32x32/accessories-text-editor-6.png</file>
         <file>icons/16x16/accessories-text-editor-6.png</file>
         <file>icons/32x32/document-properties-2.png</file>
+        <file>icons/64x64/blockdevice.png</file>
     </qresource>
     <qresource prefix="/help">
         <file>doc/help.html</file>
