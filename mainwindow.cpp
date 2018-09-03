@@ -16,16 +16,15 @@
 
 const double POINT_SIZE = 5;
 const double ZOOM_DELTA = 0.1;
+const double OFFSET = 5;
 const int COORD_SIZE = 2;
 const int MIN_DATA = 3;
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //ui->centralWidget->setMouseTracking(true);
 
     connect(ui->actionAbout,        SIGNAL(triggered(bool)),      SLOT(about()));
     connect(ui->actionHelp,         SIGNAL(triggered(bool)),      SLOT(help()));
@@ -54,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _scale = 1.0;
 
     // Start with the window maximized
-    //showMaximized();
+    showMaximized();
 
     model = new QStandardItemModel;
 
@@ -139,14 +138,54 @@ void MainWindow::zoomOriginal()
 
 void MainWindow::zoomBestFit()
 {
+    /* Zoom best fit
+     *
+     * Adjusts view to fit the width of the current draw in the graphics view
+     *
+     */
     // Use channel information
     double xmin = utilities::minValueFrom(channel.coordX());
     double xmax = utilities::maxValueFrom(channel.coordX());
     double ymin = utilities::minValueFrom(channel.coordY());
     double ymax = utilities::maxValueFrom(channel.coordY());
-    double hdim = (xmax - xmin) * 1.1;
-    double width = ui->graphicsView->width();
-    double ratio = width/hdim;
+    double hdim;
+    double width;
+    double ratio;
+
+    if (!dimensions.isEmpty()) {
+        // If dimensions are created, use dam dimensions
+        std::vector<double> x_values;
+        std::vector<double> y_values;
+        std::vector<double> l_values;
+        std::vector<double> w_values;
+
+        // Get the dimensions of the gabion dam layers
+        for (int i = 0; i < dimensions.size(); i++) {
+            x_values.push_back(dimensions.at(i).x());
+            y_values.push_back(dimensions.at(i).y() - dimensions.at(i).height());
+            w_values.push_back(dimensions.at(i).x() + dimensions.at(i).width());
+            l_values.push_back(dimensions.at(i).length());
+        }
+
+        // Get the minimum and maximum values from the plot of the gabion dam layers
+        double new_xmin = utilities::minValueFrom(x_values);
+        double new_ymin = utilities::minValueFrom(y_values);
+        double new_xmax = utilities::maxValueFrom(w_values) + OFFSET + utilities::maxValueFrom(l_values);
+        double new_ymax = utilities::maxValueFrom(y_values) + OFFSET + utilities::maxValueFrom(l_values);
+
+        // Update minimum values if necessary
+        xmin = new_xmin <= xmin ? new_xmin : xmin;
+        ymin = new_ymin <= ymin ? new_ymin : ymin;
+
+        // Update maximum values if necessary
+        xmax = new_xmax >= xmax ? new_xmax : xmax;
+        ymax = new_ymax >= ymax ? new_ymax : ymax;
+
+    }
+
+    hdim = (xmax - xmin) * 1.1;
+    width = ui->graphicsView->width();
+    ratio = width/hdim;
 
     // Scale
     if (hdim > 0) {
@@ -1088,8 +1127,8 @@ bool MainWindow::plotDimensions()
     if (dimensions.isEmpty())
         return false;
 
-    vector<double> x_values;
-    vector<double> y_values;
+    std::vector<double> x_values;
+    std::vector<double> y_values;
 
     // Plot the dimensions
     QPen pen;
@@ -1105,12 +1144,12 @@ bool MainWindow::plotDimensions()
 
     // Determine the x-axis origin that the lateral view should have, for the draw to be in the
     // right side of the front view
-    double offset = 5;
-    double x_orig = utilities::maxValueFrom(x_values) + offset;
+
+    double x_orig = utilities::maxValueFrom(x_values) + OFFSET;
 
     // Determine the y-axis origin that the top view should have for the draw to be in the
     // bottom of the front view
-    double y_orig = utilities::maxValueFrom(y_values) + offset;
+    double y_orig = utilities::maxValueFrom(y_values) + OFFSET;
 
     // Plot the lateral and top view
     for (int i=0; i < dimensions.size(); i++) {
