@@ -79,6 +79,7 @@ private:
     QString _strWeir;
     QString _strResult;
     QString _strDimensions;
+    QString _strGeneralReport;
 
     double _flowrate;
     int _flowMethod;
@@ -101,7 +102,9 @@ private slots:
     void updatePanelCoordinates();
     void updatePanelChannel();
     void updatePanelFlow();
-    void updatePanelWeir();
+    void updatePanelAndTextWeir();
+    void updatePanelAndTextResults();
+    void updateDockPanelProperties();
     bool plotPoints();
     bool plotChannelSection();
     bool plotPointsAndChannel();

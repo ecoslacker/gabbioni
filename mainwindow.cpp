@@ -381,6 +381,8 @@ void MainWindow::openCsvFile()
     // Process the data and initialize the design
     prepareDesign(inputdata);
 
+    statusBar()->showMessage(QString("File: %1").arg(fileName));
+
     return;
 }
 
@@ -594,13 +596,8 @@ void MainWindow::simpleDesign()
 
             // ****** Update the properties dock panel ******
 
-            initializeUiTreeView();
-            updatePanelCoordinates();
-            updatePanelChannel();
-            updatePanelFlow();
-            updatePanelWeir();
+            updateDockPanelProperties();
 
-            createTextReport(); // Creates text report and updates dock panel with the results of stability analysis
             showResults(_strResult, "Stability Analysis Results");
 
         } else if (!gabionDam->getMinLayersCondition()) {
@@ -673,9 +670,22 @@ void MainWindow::performStabilityAnalysis()
 
 void MainWindow::createTextReport()
 {
+    /* Create text report
+     *
+     * Creates a string with the data and results of each part of the gabion dam design, including:
+     * - Channel cross section
+     * - Channel flow
+     * - Flow estimation method
+     * - Weir (spillway) dimensions
+     * - Gabion dam dimensions
+     * - Stability analysis results
+     *
+     */
 
+    // Prepare the channel cross section
     _strChannel = QString::fromStdString(channel.strChannel());
 
+    // Prepare the gabion dam dimensions
     QString strLine;
     _strDimensions = "Dam layers dimensions\n";
     _strDimensions += "Length\tWidth\tHeight\tx-coord\ty-coord\n";
@@ -684,128 +694,17 @@ void MainWindow::createTextReport()
         _strDimensions.append(strLine);
     }
 
-    // Get the conditions as boolean text
-    QString textSliding = stability->slidingCondition() ? "true" : "false";
-    QString textCentral = stability->centralCondition() ? "true" : "false";
-    QString textOverturn = stability->overturnCondition() ? "true" : "false";
-    QString textThird = stability->thirdCondition() ? "true" : "false";
-
-    _strResult = "Dimensions\t\t\n";
-
-    QStringList properties;
-    QStringList values;
-    QStringList units;
-
-    properties << "Base length (B):\t%1\t%2\n"
-               << "Effective height (H):\t%1\t%2\n"
-               << "Crest of the dam (b):\t%1\t%2\n"
-               << "Water height (h'):\t%1\t%2\n"
-               << "Unitary section volume (V):\t%1\t%2\n"
-               << "Dam total volume (Vt):\t%1\t%2\n"
-               << "Wet area (S):\t%1\t%2\n"
-               << "Centroid X:\t%1\t%2\n"
-               << "Centroid Y:\t%1\t%2\n"
-               << "Centroid Z:\t%1\t%2\n"
-               << "\nForces\t%1\t%2\n"
-               << "Weight of dam's section (P):\t%1\t%2\n"
-               << "Nappe weight (q):\t%1\t%2\n"
-               << "Hydrostatic pressure (E):\t%1\t%2\n"
-               << "Dam's weight lever (Zp):\t%1\t%2\n"
-               << "Nappe lever (Xq):\t%1\t%2\n"
-               << "Hydrostatic lever (XE):\t%1\t%2\n"
-               << "Front dam's weight lever (Xp):\t%1\t%2\n"
-               << "\nParameters\t%1\t%2\n"
-               << "Spec. gravity water-sediment:\t%1\t%2\n"
-               << "Specific gravity stone (delta):\t%1\t%2\n"
-               << "Apparent specific gravity:\t%1\t%2\n"
-               << "Friction factor (f):\t%1\t%2\n"
-               << "Security factor:\t%1\t%2\n"
-               << "\nStability conditions\t%1\t%2\n"
-               << "Sliding condition:\t%1 :\t%2\n"
-               << "Overturning condition:\t%1 :\t%2\n"
-               << "Middle third condition:\t%1 :\t%2\n"
-               << "Resulting forces:\t%1 :\t%2\n";
-
-    values << QString::number(stability->damBase(), 'f', _dec)
-           << QString::number(stability->effectiveHeight(), 'f', _dec)
-           << QString::number(stability->damCrest(), 'f', _dec)
-           << QString::number(gabionDam->getWeirWaterHeight(), 'f', _dec)
-           << QString::number(stability->damSectionVolume(), 'f', _dec)
-           << QString::number(gabionDam->getDamVolume(), 'f', _dec)
-           << QString::number(stability->wetArea(), 'f', _dec)
-           << QString::number(gabionDam->getCentroidx(), 'f', _dec)
-           << QString::number(gabionDam->getCentroidy(), 'f', _dec)
-           << QString::number(gabionDam->getCentroidz(), 'f', _dec)
-           << ""
-           << QString::number(stability->damWeight(), 'f', _dec)
-           << QString::number(stability->nappeWeight(), 'f', _dec)
-           << QString::number(stability->hydrostatic(), 'f', _dec)
-           << QString::number(stability->damLever(), 'f', _dec)
-           << QString::number(stability->nappeLever(), 'f', _dec)
-           << QString::number(stability->hydrostaticLever(), 'f', _dec)
-           << QString::number(stability->frontLever(), 'f', _dec)
-           << ""
-           << QString::number(stability->sgWater(), 'f', _dec)
-           << QString::number(stability->sgStone(), 'f', _dec)
-           << QString::number(stability->sgStone()-stability->sgWater(), 'f', _dec)
-           << QString::number(stability->friction(), 'f', _dec)
-           << QString::number(stability->safetyFactor(), 'f', _dec)
-           << ""
-           << QString::number(stability->totalSliding(), 'f', _dec) + "\t> " + QString::number(stability->safetyFactor(), 'f', _dec)
-           << QString::number(stability->totalOverturning(), 'f', _dec) + "\t> " + QString::number(stability->safetyFactor(), 'f', _dec)
-           << QString::number(stability->middleThird(), 'f', _dec) + " " + _lengthUnit + "\t> " + QString::number(stability->totalDisplacement(), 'f', _dec) + " " + _lengthUnit
-           << QString::number(stability->thirdForces(), 'f', _dec) + " " + _weightUnit + "\t> " + QString::number(stability->resultingForces(), 'f', _dec) + " " + _weightUnit;
-
-    units << _lengthUnit
-          << _lengthUnit
-          << _lengthUnit
-          << _lengthUnit
-          << _volumeUnit
-          << _volumeUnit
-          << _areaUnit
-          << _lengthUnit
-          << _lengthUnit
-          << _lengthUnit
-          << ""
-          << _weightUnit
-          << _weightUnit
-          << _weightUnit
-          << _lengthUnit
-          << _lengthUnit
-          << _lengthUnit
-          << _lengthUnit
-          << ""
-          << _sgravUnit
-          << _sgravUnit
-          << _sgravUnit
-          << ""
-          << ""
-          << ""
-          << textSliding
-          << textOverturn
-          << textCentral
-          << textThird;
-
-    _properties << tr("Dimensions");
-    _values << "";
-    _units << "";
-
-    for (int i=0; i < properties.size(); i++) {
-        QString strLine = QString(properties.at(i)).arg(values.at(i)).arg(units.at(i));
-        _strResult += strLine;
-        QStringList lineParts = strLine.split('\t');
-
-        // Update the properties dock panel
-        _properties << lineParts.at(0).trimmed();
-        _values << lineParts.at(1).trimmed();
-        if (lineParts.length() == 4)
-            _units << lineParts.at(2).trimmed() + lineParts.at(3).trimmed();
-        else
-            _units << lineParts.at(2).trimmed();
-    }
-    updateUiProperties();
-
-    qDebug() << _strResult;
+    // Generate the general report
+    _strGeneralReport = "Design of a gabion dam.\n\n";
+    _strGeneralReport += _strChannel + "\n";
+    _strGeneralReport += _strFlow + "\n";
+    if (!_strManning.isEmpty())
+        _strGeneralReport += _strManning + "\n";
+    if (!_strRational.isEmpty())
+        _strGeneralReport += _strRational + "\n";
+    _strGeneralReport += _strWeir;
+    _strGeneralReport += _strDimensions + "\n";
+    _strGeneralReport += _strResult;
 }
 
 void MainWindow::initializeUiTreeView()
@@ -850,6 +749,7 @@ void MainWindow::updateUiProperties()
     ui->treeView->setAlternatingRowColors(true);
     // Adjust the colum size to their content
     ui->treeView->resizeColumnToContents(0);
+    ui->treeView->resizeColumnToContents(2);
 }
 
 void MainWindow::updatePanelCoordinates()
@@ -871,7 +771,7 @@ void MainWindow::updatePanelCoordinates()
     _properties << tr("X coord:") << tr("Y coord:");
     _values << x_coord << y_coord;
     _units << _lengthUnit << _lengthUnit;
-    updateUiProperties();
+    //updateUiProperties();
 }
 
 void MainWindow::updatePanelChannel()
@@ -897,7 +797,7 @@ void MainWindow::updatePanelChannel()
                   << ""
                   << _lengthUnit;
 
-    updateUiProperties();
+    //updateUiProperties();
 }
 
 void MainWindow::updatePanelFlow()
@@ -909,29 +809,196 @@ void MainWindow::updatePanelFlow()
     _units << _flowUnit
            << QString::number(_flowMethod, 'f', 0);
 
-    updateUiProperties();
+    //updateUiProperties();
 }
 
-void MainWindow::updatePanelWeir()
+void MainWindow::updatePanelAndTextWeir()
 {
-    _properties << tr("Weir width:")
-                << tr("Weir height:")
-                << tr("Weir coefficient:")
-                << tr("Weir water head:")
-                << tr("Weir freeboard:")
-                << tr("Weir gabion layers:");
-    _values << QString::number(gabionDam->getWeir()->width(), 'f', _dec)
-            << QString::number(gabionDam->getWeir()->wallsHeight(), 'f', _dec)
-            << QString::number(gabionDam->getWeir()->coefficient(), 'f', _dec)
-            << QString::number(gabionDam->getWeir()->waterHeight(), 'f', _dec)
-            << QString::number(gabionDam->getWeir()->wallsHeight() - gabionDam->getWeir()->waterHeight(), 'f', _dec)
-            << QString::number(gabionDam->getWeir()->levels(), 'f', 0);
-    _units << _lengthUnit
-           << _lengthUnit
+
+    QStringList properties;
+    QStringList values;
+    QStringList units;
+
+    // This headers will be shared between text report and dock panel
+    properties << tr("Weir (Spillway)\t%1\t%2\n")
+               << tr("Width:\t%1\t%2\n")
+               << tr("Height:\t%1\t%2\n")
+               << tr("Coefficient:\t%1\t%2\n")
+               << tr("Water head:\t%1\t%2\n")
+               << tr("Freeboard:\t%1\t%2\n")
+               << tr("Gabion layers:\t%1\t%2\n");
+    values << ""
+           << QString::number(gabionDam->getWeir()->width(), 'f', _dec)
+           << QString::number(gabionDam->getWeir()->wallsHeight(), 'f', _dec)
+           << QString::number(gabionDam->getWeir()->coefficient(), 'f', _dec)
+           << QString::number(gabionDam->getWeir()->waterHeight(), 'f', _dec)
+           << QString::number(gabionDam->getWeir()->wallsHeight() - gabionDam->getWeir()->waterHeight(), 'f', _dec)
+           << QString::number(gabionDam->getWeir()->levels(), 'f', 0);
+    units << ""
+          << _lengthUnit
+          << _lengthUnit
+          << ""
+          << _lengthUnit
+          << _lengthUnit
+          << "";
+
+    for (int i=0; i < properties.size(); i++) {
+        QString strLine = QString(properties.at(i)).arg(values.at(i)).arg(units.at(i));
+        _strWeir += strLine;
+        QStringList lineParts = strLine.split('\t');
+
+        // Update the properties dock panel
+        _properties << lineParts.at(0).trimmed();
+        _values << lineParts.at(1).trimmed();
+        if (lineParts.length() == 4)
+            _units << lineParts.at(2).trimmed() + lineParts.at(3).trimmed();
+        else
+            _units << lineParts.at(2).trimmed();
+    }
+    //updateUiProperties();
+}
+
+void MainWindow::updatePanelAndTextResults()
+{
+    /*
+     * Update panel and text results
+     *
+     * Updates the properties in the dock panel and the string containing the results and data
+     * of stability analysis. Both operations were performed together because they share the
+     * same information sources and in order to have the same headers.
+     *
+     */
+
+    // Get the conditions as boolean text
+    QString textSliding = stability->slidingCondition() ? "true" : "false";
+    QString textCentral = stability->centralCondition() ? "true" : "false";
+    QString textOverturn = stability->overturnCondition() ? "true" : "false";
+    QString textThird = stability->thirdCondition() ? "true" : "false";
+
+
+    QStringList properties;
+    QStringList values;
+    QStringList units;
+
+    // These headers will be shared between text report and dock panel
+    properties << tr("Dimensions\t%1\t%2\n")
+               << tr("Base length (B):\t%1\t%2\n")
+               << tr("Effective height (H):\t%1\t%2\n")
+               << tr("Crest of the dam (b):\t%1\t%2\n")
+               << tr("Water height (h'):\t%1\t%2\n")
+               << tr("Unitary section volume (V):\t%1\t%2\n")
+               << tr("Dam total volume (Vt):\t%1\t%2\n")
+               << tr("Wet area (S):\t%1\t%2\n")
+               << tr("Centroid X:\t%1\t%2\n")
+               << tr("Centroid Y:\t%1\t%2\n")
+               << tr("Centroid Z:\t%1\t%2\n")
+               << tr("\nForces\t%1\t%2\n")
+               << tr("Weight of dam's section (P):\t%1\t%2\n")
+               << tr("Nappe weight (q):\t%1\t%2\n")
+               << tr("Hydrostatic pressure (E):\t%1\t%2\n")
+               << tr("Dam's weight lever (Zp):\t%1\t%2\n")
+               << tr("Nappe lever (Xq):\t%1\t%2\n")
+               << tr("Hydrostatic lever (XE):\t%1\t%2\n")
+               << tr("Front dam's weight lever (Xp):\t%1\t%2\n")
+               << tr("\nParameters\t%1\t%2\n")
+               << tr("Spec. gravity water-sediment:\t%1\t%2\n")
+               << tr("Specific gravity stone (delta):\t%1\t%2\n")
+               << tr("Apparent specific gravity:\t%1\t%2\n")
+               << tr("Friction factor (f):\t%1\t%2\n")
+               << tr("Security factor:\t%1\t%2\n")
+               << tr("\nStability conditions\t%1\t%2\n")
+               << tr("Sliding condition:\t%1 :\t%2\n")
+               << tr("Overturning condition:\t%1 :\t%2\n")
+               << tr("Middle third condition:\t%1 :\t%2\n")
+               << tr("Resulting forces:\t%1 :\t%2\n");
+
+    values << ""
+           << QString::number(stability->damBase(), 'f', _dec)
+           << QString::number(stability->effectiveHeight(), 'f', _dec)
+           << QString::number(stability->damCrest(), 'f', _dec)
+           << QString::number(gabionDam->getWeirWaterHeight(), 'f', _dec)
+           << QString::number(stability->damSectionVolume(), 'f', _dec)
+           << QString::number(gabionDam->getDamVolume(), 'f', _dec)
+           << QString::number(stability->wetArea(), 'f', _dec)
+           << QString::number(gabionDam->getCentroidx(), 'f', _dec)
+           << QString::number(gabionDam->getCentroidy(), 'f', _dec)
+           << QString::number(gabionDam->getCentroidz(), 'f', _dec)
            << ""
-           << _lengthUnit
-           << _lengthUnit
-           << "";
+           << QString::number(stability->damWeight(), 'f', _dec)
+           << QString::number(stability->nappeWeight(), 'f', _dec)
+           << QString::number(stability->hydrostatic(), 'f', _dec)
+           << QString::number(stability->damLever(), 'f', _dec)
+           << QString::number(stability->nappeLever(), 'f', _dec)
+           << QString::number(stability->hydrostaticLever(), 'f', _dec)
+           << QString::number(stability->frontLever(), 'f', _dec)
+           << ""
+           << QString::number(stability->sgWater(), 'f', _dec)
+           << QString::number(stability->sgStone(), 'f', _dec)
+           << QString::number(stability->sgStone()-stability->sgWater(), 'f', _dec)
+           << QString::number(stability->friction(), 'f', _dec)
+           << QString::number(stability->safetyFactor(), 'f', _dec)
+           << ""
+           << QString::number(stability->totalSliding(), 'f', _dec) + "\t> " + QString::number(stability->safetyFactor(), 'f', _dec)
+           << QString::number(stability->totalOverturning(), 'f', _dec) + "\t> " + QString::number(stability->safetyFactor(), 'f', _dec)
+           << QString::number(stability->middleThird(), 'f', _dec) + " " + _lengthUnit + "\t> " + QString::number(stability->totalDisplacement(), 'f', _dec) + " " + _lengthUnit
+           << QString::number(stability->thirdForces(), 'f', _dec) + " " + _weightUnit + "\t> " + QString::number(stability->resultingForces(), 'f', _dec) + " " + _weightUnit;
+
+    units << ""
+          << _lengthUnit
+          << _lengthUnit
+          << _lengthUnit
+          << _lengthUnit
+          << _volumeUnit
+          << _volumeUnit
+          << _areaUnit
+          << _lengthUnit
+          << _lengthUnit
+          << _lengthUnit
+          << ""
+          << _weightUnit
+          << _weightUnit
+          << _weightUnit
+          << _lengthUnit
+          << _lengthUnit
+          << _lengthUnit
+          << _lengthUnit
+          << ""
+          << _sgravUnit
+          << _sgravUnit
+          << _sgravUnit
+          << ""
+          << ""
+          << ""
+          << textSliding
+          << textOverturn
+          << textCentral
+          << textThird;
+
+    for (int i=0; i < properties.size(); i++) {
+        QString strLine = QString(properties.at(i)).arg(values.at(i)).arg(units.at(i));
+        _strResult += strLine;
+        QStringList lineParts = strLine.split('\t');
+
+        // Update the properties dock panel
+        _properties << lineParts.at(0).trimmed();
+        _values << lineParts.at(1).trimmed();
+        if (lineParts.length() == 4)
+            _units << lineParts.at(2).trimmed() + lineParts.at(3).trimmed();
+        else
+            _units << lineParts.at(2).trimmed();
+    }
+    //updateUiProperties();
+}
+
+void MainWindow::updateDockPanelProperties()
+{
+    initializeUiTreeView(); // Initialize the properties
+    updatePanelCoordinates();
+    updatePanelChannel();
+    updatePanelFlow();
+    updatePanelAndTextWeir();
+    updatePanelAndTextResults();
+    updateUiProperties(); // This will refresh the dock panel properties
 }
 
 bool MainWindow::plotPoints()
@@ -1192,18 +1259,11 @@ void MainWindow::exportToDXF()
 
 void MainWindow::showReport()
 {
-    QString text;
-    text = "Design of a gabion dam.\n\n";
-    text += _strChannel + "\n";
-    text += _strFlow + "\n";
-    if (!_strManning.isEmpty())
-        text += _strManning + "\n";
-    if (!_strRational.isEmpty())
-        text += _strRational + "\n";
-    text += _strDimensions + "\n";
-    text += _strResult;
+    // Creates the general report of the design process
+    createTextReport();
 
-    ReportDialog reportDlg(this, text);
+    // Opens a dialog to show the final report
+    ReportDialog reportDlg(this, _strGeneralReport);
     reportDlg.exec();
 }
 
@@ -1250,12 +1310,8 @@ void MainWindow::editLayers()
 
             // ****** Update the properties dock panel ******
 
-            initializeUiTreeView();
-            updatePanelCoordinates();
-            updatePanelChannel();
-            updatePanelFlow();
+            updateDockPanelProperties();
 
-            createTextReport();
             showResults(_strResult, "Stability Analysis Results");
 
             statusBar()->showMessage(tr("Dam's dimensions were modified by user. Results values may be INVALID by now!."));
@@ -1334,6 +1390,7 @@ void MainWindow::initializeStrings()
     _strWeir = "";
     _strResult = "";
     _strDimensions = "";
+    _strGeneralReport = "";
 }
 
 QVector<QPointF> MainWindow::convertPoints(QList<QStringList> &stringPoints)
