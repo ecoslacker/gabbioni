@@ -1,10 +1,8 @@
 #ifndef DATADIALOG_H
 #define DATADIALOG_H
-
-#include <string>
-#include <vector>
 #include <QDialog>
-#include "csvdata.h"
+#include <QList>
+#include <QStringList>
 
 namespace Ui {
 class DataDialog;
@@ -18,13 +16,13 @@ public:
     explicit DataDialog(QWidget *parent = nullptr);
     ~DataDialog();
 
-    std::vector<std::vector<std::string> > getData();
+    QList<QStringList> getData();
 
     QString getFileName() const;
 
 private:
     Ui::DataDialog *ui;
-    std::vector<std::vector<std::string> > _data;
+    QList<QStringList> _data;
     QString _fileName;
 
 private slots:

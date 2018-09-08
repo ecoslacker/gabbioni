@@ -18,7 +18,6 @@
 #include <QGraphicsView>
 #include <QDockWidget>
 
-#include "csvdata.h"
 #include "utilities.h"
 #include "gabiondam.h"
 #include "oropezaanalysis.h"
@@ -93,6 +92,7 @@ private slots:
     void openData();
     void openCsvFile();
     void prepareDesign(std::vector<std::vector<string> > &values);
+    void prepareDesign(QList<QStringList> &values);
     void setupChannelData(QList<QStringList> values);
     void simpleDesign();
     void performStabilityAnalysis();

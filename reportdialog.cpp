@@ -5,7 +5,7 @@
 #include "reportdialog.h"
 #include "ui_reportdialog.h"
 
-#include "csvdata.h"
+#include "csv.h"
 
 ReportDialog::ReportDialog(QWidget *parent, QString text) :
     QDialog(parent),
@@ -24,23 +24,23 @@ ReportDialog::~ReportDialog()
 
 void ReportDialog::saveReport()
 {
-    QString delimiter = ",";
+    QChar delimiter = ',';
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save report"), QDir::homePath(), tr("Comma separated values (*.csv);;Tab delimited (*.txt)"));
     qDebug() << "Saving to: " << fileName;
 
     // Check file name and extension
     QFileInfo testFile(fileName);
     if (testFile.suffix() == "txt") {
-        delimiter = "\t";
+        delimiter = '\t';
     }
 
     // Save report in CSV or TXT file format
     saveTextReport(fileName, delimiter);
 }
 
-void ReportDialog::saveTextReport(QString fileName, QString delimiter)
+void ReportDialog::saveTextReport(QString fileName, QChar delimiter)
 {
-    std::vector< std::vector<std::string> > data;
+    QList<QStringList> data;
 
     // Extract the content from the text field
     QStringList content = ui->plainTextEdit->toPlainText().split('\n');
@@ -48,14 +48,9 @@ void ReportDialog::saveTextReport(QString fileName, QString delimiter)
     // Parse each line of the content
     foreach (QString line, content) {
         QStringList line_data = line.split('\t');
-        std::vector<std::string> std_line_data;
-
-        foreach (QString single_data, line_data) {
-            std_line_data.push_back(single_data.toStdString());
-        }
-
-        data.push_back(std_line_data);
+        data.append(line_data);
     }
 
-    CsvData::write(fileName.toStdString(), data, delimiter.toStdString());
+    // Write data to file name
+    CSV::write(data, fileName, "UTF-8", delimiter);
 }

@@ -5,9 +5,9 @@
 
 namespace CSV
 {
-    QList<QStringList> parseFromString(const QString &string);
-    QList<QStringList> parseFromFile(const QString &filename, const QString &codec = QString());
-    bool write(const QList<QStringList> data, const QString &filename, const QString &codec = QString());
+    QList<QStringList> parseFromString(const QString &string, const QChar &delimiter = ',');
+    QList<QStringList> parseFromFile(const QString &filename, const QString &codec = QString(), const QChar &delimiter = ',');
+    bool write(const QList<QStringList> data, const QString &filename, const QString &codec = QString(), const QChar &delimiter = ',');
 }
 
 #endif // CSV_H

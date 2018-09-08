@@ -20,7 +20,7 @@ private:
 
 private slots:
     void saveReport();
-    void saveTextReport(QString fileName, QString delimiter);
+    void saveTextReport(QString fileName, QChar delimiter);
 };
 
 #endif // REPORTDIALOG_H

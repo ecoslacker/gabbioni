@@ -13,6 +13,7 @@
 #include "datadialog.h"
 #include "textdialog.h"
 #include "dxffiles.h"
+#include "csv.h"
 
 const double POINT_SIZE = 5;
 const double ZOOM_DELTA = 0.1;
@@ -299,25 +300,25 @@ void MainWindow::openData()
 
     DataDialog dataDlg;
     if (dataDlg.exec() == QDialog::Accepted) {
-        std::vector<std::vector<std::string> > inputdata;
+        QList<QStringList> inputdata;
 
         // Get the data from dialog, ignore emty cells
         inputdata.clear();
         bool all_empty_values = true;
-        for (size_t i = 0; i < dataDlg.getData().size(); i++) {
-            std::vector<std::string> pair;
+        for (int i = 0; i < dataDlg.getData().size(); i++) {
+            QStringList pair;
 
 
             // Get the non-empty data from the dialog
-            if (!dataDlg.getData().at(i).at(0).empty() && !dataDlg.getData().at(i).at(1).empty()) {
+            if (!dataDlg.getData().at(i).at(0).isEmpty() && !dataDlg.getData().at(i).at(1).isEmpty()) {
                 all_empty_values = false;
-                pair.push_back(dataDlg.getData().at(i).at(0));
-                pair.push_back(dataDlg.getData().at(i).at(1));
+                pair.append(dataDlg.getData().at(i).at(0));
+                pair.append(dataDlg.getData().at(i).at(1));
             }
 
             // Add the pair of data
             if (pair.size() == 2)
-                inputdata.push_back(pair);
+                inputdata.append(pair);
         }
 
         // If data is empty there is nothing to do
@@ -352,10 +353,10 @@ void MainWindow::openData()
         // Check for negative values or if all data are zeros
         bool negative_values = false;
         bool all_zero_values = true;
-        for (size_t i = 0; i < inputdata.size(); i++) {
+        for (int i = 0; i < inputdata.size(); i++) {
             // Check for zero or negative values (non-numeric characters will be converted to zero)
-            double x = QString::fromStdString(inputdata.at(i).at(0)).toDouble();
-            double y = QString::fromStdString(inputdata.at(i).at(1)).toDouble();
+            double x = inputdata.at(i).at(0).toDouble();
+            double y = inputdata.at(i).at(1).toDouble();
             if (x < 0 || y < 0)
                 negative_values = true;
             if (x > 0 || y > 0)
@@ -390,7 +391,7 @@ void MainWindow::openCsvFile()
      *
      */
 
-    char delimiter = ',';
+    QChar delimiter = ',';
 
     // Get the file name from dialog
     QString fileName;
@@ -411,9 +412,10 @@ void MainWindow::openCsvFile()
         delimiter = '\t';
     }
 
-    // Get the data from the CSV file (this uses libcsvdata)
-    std::vector<std::vector<std::string> > inputdata;
-    if (!CsvData::parseFromFile(fileName.toStdString(), inputdata, delimiter)) {
+    // Get the data from the CSV file
+    QList<QStringList> inputdata;
+    inputdata = CSV::parseFromFile(fileName, "UTF-8", delimiter);
+    if (inputdata.isEmpty()) {
         return;
     }
 
@@ -432,15 +434,26 @@ void MainWindow::prepareDesign(std::vector<std::vector<string> > &values)
      *
      */
 
+    // Convert the data from strings and vectors to QStrings and QLists
+    QList<QStringList> content = convertData(values);
+
+    prepareDesign(content);
+}
+
+void MainWindow::prepareDesign(QList<QStringList> &values)
+{
+    /*
+     * Carries out some actions required in order to start the design of the dam
+     *
+     */
+
+    qDebug() << "Contents:\n" << values;
+
     // Reinitialize the weir, gabion dam and stability analysis
     restartProject();
 
-    // Convert the data from strings and vectors to QStrings and QLists
-    QList<QStringList> content = convertData(values);
-    qDebug() << "Contents:\n" << content;
-
     // Fill up the channel object with the data
-    setupChannelData(content);
+    setupChannelData(values);
 
     plotPointsAndChannel();
     zoomBestFit();

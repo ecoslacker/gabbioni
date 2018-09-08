@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     customtablenopaste.cpp \
     runoffcoefficientdialog.cpp \
     hydrology.cpp \
-    textdialog.cpp
+    textdialog.cpp \
+    csv.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -74,7 +75,8 @@ HEADERS  += mainwindow.h \
     customtablenopaste.h \
     runoffcoefficientdialog.h \
     hydrology.h \
-    textdialog.h
+    textdialog.h \
+    csv.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
@@ -96,8 +98,3 @@ RESOURCES += \
 
 RC_FILE = Gabbioni.rc
 ICON = Gabbioni.icns
-
-unix|win32: LIBS += -L$$PWD/../shared/libcsvdata/lib/ -lcsvdata
-
-INCLUDEPATH += $$PWD/../shared/libcsvdata/include
-DEPENDPATH += $$PWD/../shared/libcsvdata/include

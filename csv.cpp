@@ -6,7 +6,7 @@
 #include <QRegExp>
 #include <QDebug>
 
-QList<QStringList> parse(const QString &string)
+QList<QStringList> parse(const QString &string, const QChar &delimiter = ',')
 {
     enum State {Normal, Quote} state = Normal;
     QList<QStringList> data;
@@ -27,8 +27,8 @@ QList<QStringList> parse(const QString &string)
                 data.append(line);
                 line.clear();
             }
-            // comma
-            else if (current == ',') {
+            // delimiter
+            else if (current == delimiter) {
                 // add line
                 line.append(value);
                 value.clear();
@@ -75,12 +75,12 @@ QString initString(const QString &string)
     return result;
 }
 
-QList<QStringList> CSV::parseFromString(const QString &string)
+QList<QStringList> CSV::parseFromString(const QString &string, const QChar &delimiter)
 {
-    return parse(initString(string));
+    return parse(initString(string), delimiter);
 }
 
-QList<QStringList> CSV::parseFromFile(const QString &filename, const QString &codec)
+QList<QStringList> CSV::parseFromFile(const QString &filename, const QString &codec, const QChar &delimiter)
 {
     QString string;
     QFile file(filename);
@@ -92,10 +92,10 @@ QList<QStringList> CSV::parseFromFile(const QString &filename, const QString &co
         string = in.readAll();
         file.close();
     }
-    return parse(initString(string));
+    return parse(initString(string), delimiter);
 }
 
-bool CSV::write(const QList<QStringList> data, const QString &filename, const QString &codec)
+bool CSV::write(const QList<QStringList> data, const QString &filename, const QString &codec, const QChar &delimiter)
 {
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -118,7 +118,7 @@ bool CSV::write(const QList<QStringList> data, const QString &filename, const QS
                 output << value;
             }
         }
-        out << output.join(",") << "\r\n";
+        out << output.join(delimiter) << "\r\n";
     }
 
     file.close();

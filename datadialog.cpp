@@ -1,5 +1,3 @@
-//#include <QVector>
-//#include <QStringList>
 #include <QDebug>
 #include <QString>
 #include <QFileInfo>
@@ -8,6 +6,7 @@
 #include <QMessageBox>
 #include "datadialog.h"
 #include "ui_datadialog.h"
+#include "csv.h"
 
 const size_t COLUMNS = 2;
 
@@ -29,7 +28,7 @@ DataDialog::~DataDialog()
     delete ui;
 }
 
-std::vector<std::vector<std::string> > DataDialog::getData()
+QList<QStringList> DataDialog::getData()
 {
     getDataFromTable();
     return _data;
@@ -42,7 +41,7 @@ QString DataDialog::getFileName() const
 
 void DataDialog::openFile()
 {
-    char delimiter = ',';
+    QChar delimiter = ',';
 
     // Get the file name from dialog
     QString fileName;
@@ -58,9 +57,10 @@ void DataDialog::openFile()
         delimiter = '\t';
     }
 
-    // Get the data from the CSV file (this uses libcsvdata)
-    if (!CsvData::parseFromFile(fileName.toStdString(), _data, delimiter)) {
-        qDebug() << "There was an error openning file: " << fileName << " for reading.";
+    // Get the data from the CSV file
+    _data.clear();
+    _data = CSV::parseFromFile(fileName, "UTF-8", delimiter);
+    if (_data.isEmpty()) {
         return;
     }
 
@@ -75,11 +75,11 @@ void DataDialog::saveFile()
 
     // Verify the data
     qDebug() << "Data: " << QString::number(_data.size());
-    for (size_t i = 0; i < _data.size(); i++) {
-        qDebug() << QString::fromStdString( _data.at(i).at(0) ) << QString::fromStdString( _data.at(i).at(1) );
+    for (int i = 0; i < _data.size(); i++) {
+        qDebug() << _data.at(i).at(0) << _data.at(i).at(1) ;
     }
 
-    std::string delimiter = ",";
+    QChar delimiter = ',';
 
     // Get file name from dialog
     QString fileName;
@@ -93,10 +93,8 @@ void DataDialog::saveFile()
         delimiter = '\t';
     }
 
-    qDebug() << fileName << QString::fromStdString(delimiter);
-    if (!CsvData::write(fileName.toStdString(), _data, delimiter)) {
-        qDebug() << "There was an error openning file: " << fileName << " for writing.";
-    }
+    // Write data to file name
+    CSV::write(_data, fileName, "UTF-8", delimiter);
 }
 
 void DataDialog::setDataToTable()
@@ -116,13 +114,13 @@ void DataDialog::setDataToTable()
     ui->tableWidget->setRowCount(int(_data.size()));
 
     // Set the data to the table
-    for (size_t i = 0; i < _data.size(); i++) {
+    for (int i = 0; i < _data.size(); i++) {
 
         if (_data.at(i).size() != COLUMNS)
             return;
 
-        QTableWidgetItem *itemX = new QTableWidgetItem(QString::fromStdString(_data.at(i).at(0)).trimmed());
-        QTableWidgetItem *itemY = new QTableWidgetItem(QString::fromStdString(_data.at(i).at(1)).trimmed());
+        QTableWidgetItem *itemX = new QTableWidgetItem(_data.at(i).at(0).trimmed());
+        QTableWidgetItem *itemY = new QTableWidgetItem(_data.at(i).at(1).trimmed());
 
         itemX->setTextAlignment(Qt::AlignRight);
         itemY->setTextAlignment(Qt::AlignRight);
@@ -141,7 +139,7 @@ void DataDialog::getDataFromTable()
 
     _data.clear();
     for (int i=0; ui->tableWidget->rowCount(); i++) {
-        std::vector<std::string> row;
+        QStringList row;
         QTableWidgetItem *itemX = ui->tableWidget->item(i, 0);
         QTableWidgetItem *itemY = ui->tableWidget->item(i, 1);
 
@@ -150,9 +148,9 @@ void DataDialog::getDataFromTable()
             break;
         }
 
-        row.push_back(itemX->text().toStdString());
-        row.push_back(itemY->text().toStdString());
-        _data.push_back(row);
+        row.append(itemX->text());
+        row.append(itemY->text());
+        _data.append(row);
     }
 }
 
