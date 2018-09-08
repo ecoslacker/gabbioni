@@ -1,5 +1,5 @@
 +--------------------------+
-Fri Aug 31 00:33:14 UTC 2018
+Sat Sep  7 23:47:27 UTC 2018
 Gabbioni v0.1 Beta is released!
 
 I'm happy to announce the new release of the Gabbioni software!
