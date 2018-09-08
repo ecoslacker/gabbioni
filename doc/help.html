@@ -82,22 +82,22 @@
   <p>The rainfall intensity is a value that implies some assumptions. First, it should be the intensity of a rain event with the same (approximate) duration as the time of concentration. Second, it should be selected according to the recommended return period of an extreme rain event. To help in the selection of the rainfall intensity value, a time of concentration calculator is included in this dialog. Please consider that a properly calculation of this value involves another formulas and calculations, this is only included as a quick help.</p>
   <p><img src=":/help/doc/img/gabbioni_06.PNG" alt="Rational formula" /></p>
   <p>An aditional tool to help in the calculation of the runoff coefficient is also included, you can access this dialog by pressing the tool button (the one with the three dots <strong>...</strong>).</p>
-  <p><img src=":/help/doc/img/gabbioni_06_1.PNG" alt="Runoff coefficient" /></p>
+  <p><img src=":/help/doc/img/gabbioni_07.PNG" alt="Runoff coefficient" /></p>
   <p>Once all the values are selected the results are presented at the bottom of the dialog, the runoff value will be used automatically when accepting these results by pressing the <strong>OK</strong> button.</p>
 
   <h5>The Chezy-Manning equation</h5>
 
   <p>This method could be used when the height of the water flow is known for the channel cross-section used. Height of an extreme rain event should be used. Frequently some water marks from an extreme runoff/rain event could be observed in the channel at the time of measuring its cross section. You can measure the maximum height of this mark relative to the stream bed.</p>
-  <p><img src=":/help/doc/img/gabbioni_08.PNG" alt="Manning equation" /></p>
+  <p><img src=":/help/doc/img/gabbioni_09.PNG" alt="Manning equation" /></p>
   <p>The other value required is the roughness coefficient. A special dialog can be accessed by pressing the tool button <strong>...</strong>, where the user can select a value according to the hydraulic conditions of the channel. Values from the <strong>Natural streams</strong> tab are recommended. To select a value you have to click on it, you can also use a custom value.</p>
-  <p><img src=":/help/doc/img/gabbioni_07.PNG" alt="Roughness coefficient" /></p>
+  <p><img src=":/help/doc/img/gabbioni_08.PNG" alt="Roughness coefficient" /></p>
 
   <h4>The gabion's height and abutment</h4>
 
   <p>The first input value for the design process is the gabion's height. This value is the base for everything. The dam body will be assembled in layers of this height. Two initial values are included: 0.5 and 1.0 meters. These are the more frequent heights for rectangular gabion boxes and you should select one.</p>
   <p>The abutment is the lateral excavation needed to anchor the dam body. Every layer of the dam will be inserted from both sides into the side of the channel using this value. It's one of the most important values for the structural stability of the dam. As a suggestion the same value for the gabion's height it's used, to define a more appropiate value you should consider soil properties of the stream.</p>
   <p>As the dam body is stepped based, you should provide a step length and how often you want it to be applied. As a default the step is applied in every layer. The base layer is sometimes longer than the others to avoid falling water to impact directly in the stream and this way prevent erosion as a stilling basin would do it. The length of this layer should take into account the slope of the stream and soil properties.</p>
-  <p><img src=":/help/doc/img/gabbioni_10.PNG" alt="Gabion height and abutment" /></p>
+  <p><img src=":/help/doc/img/gabbioni_11.PNG" alt="Gabion height and abutment" /></p>
   <p>In this figure you can see how these values are applied in the dimensioning of the gabion dam. You can change these values freely according to your criteria and the requirements of your particular case, default values are just suggestions.</p>
   <p><img src=":/help/doc/img/gabbioni_dam.png" alt="Some parts of a gabion dam" /></p>
 
@@ -105,23 +105,23 @@
 
   <p>An important part of the gabion dam body is a spillway. This element allows the water flow to securely pass through the dam which means minimizing its erosion effect on the channel. The spillway it's designed as a broad-crested rectangular weir for the already known (or estimated) discharge.</p>
   <p>The user should provide the desired width of the weir and a weir coefficient. Once the weir is designed a spillway will be created in the layers of the dam. The spillway will be placed in the dam in order to cover the stream bed.</p>
-  <p><img src=":/help/doc/img/gabbioni_11.PNG" alt="Weir design" /></p>
+  <p><img src=":/help/doc/img/gabbioni_12.PNG" alt="Weir design" /></p>
   <p>Finally in the last tab there are some stability coefficients and parameters, you can change these values.</p>
-  <p><img src=":/help/doc/img/gabbioni_12.PNG" alt="Stability analysis" /></p>
+  <p><img src=":/help/doc/img/gabbioni_13.PNG" alt="Stability analysis" /></p>
 
   <h4>Dam dimensions and stability analysis</h4>
 
   <p>Once all the data is introduced, the program will create the dimensions of each layer of the dam automatically, then a stability analysis will be performed using the method suggested by López-Martínez &#038; Oropeza-Mota (2009) to determine if the dam is stable enough.</p>
   <p>This will be done automatically when accepting the data in the <strong>Simple design</strong> dialog by pressing the <strong>Ok</strong> button, otherwise the design will be canceled.</p>
-  <p><img src=":/help/doc/img/gabbioni_13.PNG" alt="Design results" /></p>
+  <p><img src=":/help/doc/img/gabbioni_14.PNG" alt="Design results" /></p>
 
   <h3>Create a report and some plans</h3>
 
   <p>Reports and plans are an important part of an engineering project. Gabbioni allows you to view the results in a text delimited format using the <strong>Report</strong> dialog. This report includes all the results of each step in the design process, including the channel cross section coordinates, the runoff estimation, weir design, dam dimensioning and stability analysis.</p>
   <p>This report has plain text formatting and all its information can be saved to CSV or tab delimited text file. This report files can be opened later in another programs such as text editors or spreadsheets.</p>
-  <p><img src=":/help/doc/img/gabbioni_14.PNG" alt="Final gabion dam" /></p>
+  <p><img src=":/help/doc/img/gabbioni_15.PNG" alt="Final gabion dam" /></p>
   <p>Also you can export the plans of the gabion dam you just designed to a DXF file, so it can be viewed in any other CAD program.</p>
-  <p><img src=":/help/doc/img/gabbioni_16.PNG" alt="Gabion dam exported to DXF" /></p>
+  <p><img src=":/help/doc/img/gabbioni_17.png" alt="Gabion dam exported to DXF" /></p>
 
   <h2>Download</h2>
 
@@ -129,8 +129,25 @@
 
   <h2>License</h2>
 
-  <pre>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</pre>
+<pre><code>
+Gabbioni<br>
+Design of small gabion dams for soil conservation.<br><br>
+
+Copyright (C) 2014-2018 Eduardo Jimenez &lt;ecoslacker@irriapps.com&gt;<br><br>
+
+This program is free software; you can redistribute it and/or<br>
+modify it under the terms of the GNU General Public License<br>
+as published by the Free Software Foundation; either version 2<br>
+of the License, or (at your option) any later version.<br><br>
+
+This program is distributed in the hope that it will be useful,<br>
+but WITHOUT ANY WARRANTY; without even the implied warranty of<br>
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the<br>
+GNU General Public License for more details.<br><br>
+
+You should have received a copy of the GNU General Public License<br>
+along with this program; if not, write to the Free Software<br>
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+</code></pre>
 </body>
 </html>

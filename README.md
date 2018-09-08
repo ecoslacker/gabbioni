@@ -18,7 +18,7 @@ You can find binaries (executables) for Windows and macOS and more information a
 Gabbioni
 Design of small gabion dams for soil conservation.
 
-Copyright (C) Eduardo Jimenez <ecoslacker@irriapps.com>
+Copyright (C) 2014-2018 Eduardo Jimenez <ecoslacker@irriapps.com>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

@@ -70,6 +70,7 @@
         <file>doc/img/gabbioni_dam.png</file>
         <file>doc/img/gabbioni_06_1.PNG</file>
         <file>ChangeLog.txt</file>
+        <file>doc/img/gabbioni_17.png</file>
     </qresource>
     <qresource prefix="/img">
         <file>images/weir.png</file>
