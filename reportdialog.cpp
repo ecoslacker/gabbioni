@@ -4,7 +4,6 @@
 
 #include "reportdialog.h"
 #include "ui_reportdialog.h"
-
 #include "csv.h"
 
 ReportDialog::ReportDialog(QWidget *parent, QString text) :

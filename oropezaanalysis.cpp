@@ -124,12 +124,12 @@ void OropezaAnalysis::setCentralCondition(bool centralCondition)
     _centralCondition = centralCondition;
 }
 
-vector<Layer> OropezaAnalysis::dimensions() const
+std::vector<Layer> OropezaAnalysis::dimensions() const
 {
     return _dimensions;
 }
 
-void OropezaAnalysis::setDimensions(const vector<Layer> &dimensions)
+void OropezaAnalysis::setDimensions(const std::vector<Layer> &dimensions)
 {
     _dimensions = dimensions;
 }
@@ -521,7 +521,7 @@ bool OropezaAnalysis::checkCentralCondition()
 {
     /* Checks the central condition
      *
-     * The resulting vector of all the forces over the dam should be at 2/3 of the base length
+     * The resulting std::vector of all the forces over the dam should be at 2/3 of the base length
      *
      */
 

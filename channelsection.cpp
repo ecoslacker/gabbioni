@@ -205,7 +205,7 @@ bool ChannelSection::extractInformation()
             _streambed = _leftX.at(0) + ((_rightX.at(0) - _leftX.at(0)) / 2);
 
     } else {
-        std::cout << "Error checking coordinates." << endl;
+        std::cout << "Error checking coordinates." << std::endl;
         return false;
     }
 
@@ -257,7 +257,7 @@ bool ChannelSection::checkCoordinates()
         return false;
 
     if (_coordX.size() < MIN_DATA) {
-        std::cout << "No minimum data" << endl;
+        std::cout << "No minimum data" << std::endl;
         return false;
     }
 
@@ -276,7 +276,7 @@ bool ChannelSection::checkCoordinates()
     double prev = _coordX.at(0);
     for (size_t i=1; i < _coordX.size(); i++) {
         if (prev > _coordX.at(i)) {
-            std::cout << "Error: data not sorted (" << i << ") < (" << i-1 << ")" << endl;
+            std::cout << "Error: data not sorted (" << i << ") < (" << i-1 << ")" << std::endl;
             return false;
         }
         prev = _coordX.at(i);
@@ -306,7 +306,7 @@ bool ChannelSection::computeWidths()
      *==================================================================================*/
 
     if (_levels < MIN_LEVELS) {
-        std::cout << "Unable to compute widgets for " << _levels << " levels. Exiting..." << endl;
+        std::cout << "Unable to compute widgets for " << _levels << " levels. Exiting..." << std::endl;
         return false;
     }
 
@@ -327,7 +327,7 @@ bool ChannelSection::computeWidths()
         right_x = _coordX.at(0);
 
         currentDepth = _channelDepth - (_layersHeight * i);
-//        std::cout << "  Current depth: " << currentDepth << endl;
+//        std::cout << "  Current depth: " << currentDepth << std::endl;
 
         // Find extreme points of the channel for the current depth level
         for (size_t j=1; j < _coordY.size(); j++) {
@@ -336,22 +336,22 @@ bool ChannelSection::computeWidths()
             x2 = _coordX.at(j);
             y2 = _coordY.at(j);
 
-            //std::cout << "  x1: " << x1 << ", y1: " << y1 << endl;
-            //std::cout << "  x2: " << x2 << ", y2: " << y2 << endl;
+            //std::cout << "  x1: " << x1 << ", y1: " << y1 << std::endl;
+            //std::cout << "  x2: " << x2 << ", y2: " << y2 << std::endl;
 
             // Assuming x-axis direction from left to right
             if ((y2 >= currentDepth) && (y1 <= currentDepth)) {
                 // Find initial point for the current depth level
                 if (utilities::interpolx(x1, y1, x2, y2, currentDepth) < left_x) {
                     left_x = utilities::interpolx(x1, y1, x2, y2, currentDepth);
-                    //std::cout << "  left x-coord: " << start_x << endl;
+                    //std::cout << "  left x-coord: " << start_x << std::endl;
                 }
             }
             if ((y2 <= currentDepth) && (y1 >= currentDepth)) {
                 // Find end point for the current depth level
                 if (utilities::interpolx(x1, y1, x2, y2, currentDepth) > right_x) {
                     right_x = utilities::interpolx(x1, y1, x2, y2, currentDepth);
-                    //std::cout << "  right x-coord: " << end_x << endl;
+                    //std::cout << "  right x-coord: " << end_x << std::endl;
                 }
             }
         }
@@ -412,9 +412,9 @@ void ChannelSection::flowGeometry(double &flowArea, double &wettedPerimeter)
         x2 = _coordX.at(i);
         y2 = _coordY.at(i);
 
-//        std::cout << "  x1:"                   << setw(8) << x1 << ", y1:" << setw(8) << y1 << endl;
-//        std::cout << "  x2:"                   << setw(8) << x2 << ", y2:" << setw(8) << y2 << endl;
-//        std::cout << "  * Water at depth:\t\t" << setw(8) << _waterHeight  << endl;
+//        std::cout << "  x1:"                   << setw(8) << x1 << ", y1:" << setw(8) << y1 << std::endl;
+//        std::cout << "  x2:"                   << setw(8) << x2 << ", y2:" << setw(8) << y2 << std::endl;
+//        std::cout << "  * Water at depth:\t\t" << setw(8) << _waterHeight  << std::endl;
 
         // When water height is between y1 and y2, find themissing  point by interpolation
         // in this case the area is computed from a triangle instead from a trapezium
@@ -422,13 +422,13 @@ void ChannelSection::flowGeometry(double &flowArea, double &wettedPerimeter)
             // In this case, we need to find the first point
             x1 = utilities::interpolx(x1, y1, x2, y2, _waterHeight);
             y1 = _waterHeight;
-            std::cout << "  -Point found:" << "\t(" << x1 << ", " << y1 << ")" << endl;
+            std::cout << "  -Point found:" << "\t(" << x1 << ", " << y1 << ")" << std::endl;
         }
         if ((y2 < _waterHeight) && (y1 > _waterHeight)) {
             // In this case, we need to find the second point
             x2 = utilities::interpolx(x1, y1, x2, y2, _waterHeight);
             y2 = _waterHeight;
-            std::cout << "  -Point found: " << "\t(" << x2 << ", " << y2 << ")" << endl;
+            std::cout << "  -Point found: " << "\t(" << x2 << ", " << y2 << ")" << std::endl;
         }
 
         /* *** *** *** *** *** *** *** *** *** IMPORTANT! *** *** *** *** *** *** *** *** ***
@@ -459,13 +459,13 @@ void ChannelSection::flowGeometry(double &flowArea, double &wettedPerimeter)
         if (area == 0)
             perimeter = 0;
 
-//        std::cout << "  * Area (" << i << "):\t\t"  << setw(8) << area      << endl;
-//        std::cout << "  * Perim (" << i << "):\t\t" << setw(8) << perimeter << "\n" << endl;
+//        std::cout << "  * Area (" << i << "):\t\t"  << setw(8) << area      << std::endl;
+//        std::cout << "  * Perim (" << i << "):\t\t" << setw(8) << perimeter << "\n" << std::endl;
 
         sum_area = sum_area + area;
         sum_perimeter = sum_perimeter + perimeter;
     }
-//    std::cout << "  Total area:\t\t" << setw(8) << sum_area << "\n" << endl;
+//    std::cout << "  Total area:\t\t" << setw(8) << sum_area << "\n" << std::endl;
 
     // Assign the values to the reference arguments
     flowArea = sum_area;

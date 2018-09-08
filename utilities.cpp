@@ -1,16 +1,14 @@
 #include <limits>
 #include "utilities.h"
 
-using namespace std;
-
 utilities::utilities()
 {
 
 }
 
-double utilities::minValueFrom(vector<double> values)
+double utilities::minValueFrom(std::vector<double> values)
 {
-    // Get the minimum value from a vector of doubles
+    // Get the minimum value from a std::vector of doubles
 
     double minVal;
 
@@ -22,9 +20,9 @@ double utilities::minValueFrom(vector<double> values)
     return minVal;
 }
 
-double utilities::maxValueFrom(vector<double> values)
+double utilities::maxValueFrom(std::vector<double> values)
 {
-    // Get the maximum value from a vector of doubles
+    // Get the maximum value from a std::vector of doubles
 
     double maxVal;
 

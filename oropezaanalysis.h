@@ -39,8 +39,8 @@ public:
     bool centralCondition() const;
     void setCentralCondition(bool centralCondition);
 
-    vector<Layer> dimensions() const;
-    void setDimensions(const vector<Layer> &dimensions);
+    std::vector<Layer> dimensions() const;
+    void setDimensions(const std::vector<Layer> &dimensions);
 
     double damSectionVolume() const;
     void setDamSectionVolume(double damSectionVolume);
@@ -127,7 +127,7 @@ private:
     double _sgWater;           // Specific gravity of water with sediment [t/m^3]
     double _safetyFactor;      // Safety factor
 
-    vector<Layer> _dimensions;
+    std::vector<Layer> _dimensions;
     GabionDam *_dam;
 
     void checkParameterValues();
