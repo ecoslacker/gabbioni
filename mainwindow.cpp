@@ -448,6 +448,7 @@ bool MainWindow::checkData(QList<QStringList> &values)
     // Negative or zero values were found
     if (negative_values || all_zero_values) {
         QMessageBox msg;
+        msg.setWindowTitle(tr("Incorrect data"));
         msg.setText(tr("Input data cannot be all zeros or negative values."));
         msg.setInformativeText(tr("Please provide valid numeric data for a channel cross section."));
         msg.setIcon(QMessageBox::Warning);
@@ -518,9 +519,9 @@ bool MainWindow::setupChannelData(QList<QStringList> values)
     // Check the coordinates
     if (!channel.isAValidSection()) {
         QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("Incorrect data"));
-        msgBox.setText(tr("Data has incorrect format or values. Consider that negative values are not allowed."));
-        msgBox.setInformativeText(tr("You should check your data, it should be numeric data in two columns separated by comma or tabs. Please check documentation."));
+        msgBox.setWindowTitle(tr("Invalid channel section"));
+        msgBox.setText(tr("The provided input data does not have a valid channel section."));
+        msgBox.setInformativeText(tr("Please check your data and provide valid data, the accepted formats are in the documentation."));
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.setIcon(QMessageBox::Warning);
