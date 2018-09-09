@@ -308,7 +308,6 @@ void MainWindow::openData()
         for (int i = 0; i < dataDlg.getData().size(); i++) {
             QStringList pair;
 
-
             // Get the non-empty data from the dialog
             if (!dataDlg.getData().at(i).at(0).isEmpty() && !dataDlg.getData().at(i).at(1).isEmpty()) {
                 all_empty_values = false;
@@ -324,7 +323,8 @@ void MainWindow::openData()
         // If data is empty there is nothing to do
         if (all_empty_values) {
             QMessageBox msg;
-            msg.setText(tr("Invalid data detected, input values are negative, zero or empty."));
+            msg.setWindowTitle(tr("Empty data"));
+            msg.setText(tr("Invalid data detected, input values empty."));
             msg.setInformativeText(tr("Please provide valid numeric data for a channel cross section."));
             msg.setIcon(QMessageBox::Warning);
             msg.exec();
@@ -335,49 +335,9 @@ void MainWindow::openData()
             return;
         }
 
-        // Check if there is enough data
-        if (inputdata.size() < MIN_DATA) {
-            // Not enough data
-            QMessageBox msg;
-            msg.setText(tr("Not enough data to continue."));
-            msg.setInformativeText(tr("A valid channel cross section should have at least 3 pairs of coordinates"));
-            msg.setIcon(QMessageBox::Warning);
-            msg.exec();
-
-            // Clear the data, just to be sure
-            inputdata.clear();
-
-            return;
-        }
-
-        // Check for negative values or if all data are zeros
-        bool negative_values = false;
-        bool all_zero_values = true;
-        for (int i = 0; i < inputdata.size(); i++) {
-            // Check for zero or negative values (non-numeric characters will be converted to zero)
-            double x = inputdata.at(i).at(0).toDouble();
-            double y = inputdata.at(i).at(1).toDouble();
-            if (x < 0 || y < 0)
-                negative_values = true;
-            if (x > 0 || y > 0)
-                all_zero_values = false;
-        }
-
-        if (negative_values || all_zero_values) {
-            QMessageBox msg;
-            msg.setText(tr("Input data cannot be all zeros or negative values."));
-            msg.setInformativeText(tr("Please provide valid numeric data for a channel cross section."));
-            msg.setIcon(QMessageBox::Warning);
-            msg.exec();
-
-            // Clear the data, just to be sure
-            inputdata.clear();
-
-            return;
-        }
-
-        // If all went OK continue to process the data and initialize the design
-        prepareDesign(inputdata);
+        // Check the data and initialize the design
+        if (!checkData(inputdata))
+            prepareDesign(inputdata);
 
     } else {
         qDebug() << "Data imput canceled by user!";
@@ -412,12 +372,15 @@ void MainWindow::openCsvFile()
         delimiter = '\t';
     }
 
+    qDebug() << "Filename: " << fileName;
+    qDebug() << "Delimiter: " << delimiter;
+
     // Get the data from the CSV file
     QList<QStringList> inputdata;
     inputdata = CSV::parseFromFile(fileName, "UTF-8", delimiter);
-    if (inputdata.isEmpty()) {
+
+    if (!checkData(inputdata))
         return;
-    }
 
     // Process the data and initialize the design
     prepareDesign(inputdata);
@@ -425,6 +388,76 @@ void MainWindow::openCsvFile()
     statusBar()->showMessage(QString("File: %1").arg(fileName));
 
     return;
+}
+
+bool MainWindow::checkData(QList<QStringList> &values)
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("Empty data"));
+    msgBox.setText(tr("Data is entirely empty or has empty values! Cannot continue."));
+    msgBox.setInformativeText(tr("Please check data, it should be numeric data in two columns separated by comma or tabs."));
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setIcon(QMessageBox::Warning);
+
+    // Check for empty data
+    if (values.isEmpty()) {
+        msgBox.exec();
+        return false;
+    }
+
+    // Empty lines or not enougth columns
+    foreach (QStringList line, values) {
+
+        if (line.isEmpty()) {
+            msgBox.exec();
+            return false;
+        }
+        if (line.size() == 1 && line.at(0).isEmpty()) {
+            msgBox.exec();
+            return false;
+        }
+    }
+
+    // Check if there is enough data
+    if (values.size() < MIN_DATA) {
+        // Not enough data
+        QMessageBox msg;
+        msg.setWindowTitle(tr("Not enough data"));
+        msg.setText(tr("Not enough data to continue."));
+        msg.setInformativeText(tr("A valid channel cross section should have at least 3 pairs of coordinates"));
+        msg.setIcon(QMessageBox::Warning);
+        msg.exec();
+
+        return false;
+    }
+
+    // Check for negative values or if all data are zeros
+    bool negative_values = false;
+    bool all_zero_values = true;
+    for (int i = 0; i < values.size(); i++) {
+        // Check for zero or negative values (non-numeric characters will be converted to zero)
+        double x = values.at(i).at(0).toDouble();
+        double y = values.at(i).at(1).toDouble();
+        if (x < 0 || y < 0)
+            negative_values = true;
+        if (x > 0 || y > 0)
+            all_zero_values = false;
+    }
+
+    // Negative or zero values were found
+    if (negative_values || all_zero_values) {
+        QMessageBox msg;
+        msg.setText(tr("Input data cannot be all zeros or negative values."));
+        msg.setInformativeText(tr("Please provide valid numeric data for a channel cross section."));
+        msg.setIcon(QMessageBox::Warning);
+        msg.exec();
+
+        return false;
+    }
+
+    // All went OK
+    return true;
 }
 
 void MainWindow::prepareDesign(std::vector<std::vector<string> > &values)
@@ -453,13 +486,16 @@ void MainWindow::prepareDesign(QList<QStringList> &values)
     restartProject();
 
     // Fill up the channel object with the data
-    setupChannelData(values);
+    if (setupChannelData(values)) {
+        plotPointsAndChannel();
+        zoomBestFit();
+    } else {
+        statusBar()->showMessage(QString("Empty or incorrect data."));
+    }
 
-    plotPointsAndChannel();
-    zoomBestFit();
 }
 
-void MainWindow::setupChannelData(QList<QStringList> values)
+bool MainWindow::setupChannelData(QList<QStringList> values)
 {
     /*
      * Extracts the channel cross-section data to initialize the ChannelSection object
@@ -469,24 +505,6 @@ void MainWindow::setupChannelData(QList<QStringList> values)
     vector<double> x;
     vector<double> y;
     for (int i = 0; i < values.size(); i++) {
-
-        // Check if the data has correct format
-        if (values.at(i).isEmpty()) {
-            continue;
-        } else if (values.at(i).size() != COORD_SIZE) {
-
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(tr("Incorrect format"));
-            msgBox.setText(tr("Data has incorrect format or values."));
-            msgBox.setInformativeText(tr("Please check data, it should be numeric data in two columns separated by comma."));
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.setDefaultButton(QMessageBox::Ok);
-            msgBox.setIcon(QMessageBox::Critical);
-            msgBox.exec();
-
-            return;
-        }
-
         // WARNING! String data will automatically be converted to zero values
         x.push_back(values.at(i).at(0).toDouble());
         y.push_back(values.at(i).at(1).toDouble());
@@ -497,8 +515,23 @@ void MainWindow::setupChannelData(QList<QStringList> values)
     channel.setCoordX(x);
     channel.setCoordY(y);
 
+    // Check the coordinates
+    if (!channel.isAValidSection()) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("Incorrect data"));
+        msgBox.setText(tr("Data has incorrect format or values. Consider that negative values are not allowed."));
+        msgBox.setInformativeText(tr("You should check your data, it should be numeric data in two columns separated by comma or tabs. Please check documentation."));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+
+        return false;
+    }
+
     // Update the coordinates in the properties panel
     updatePanelCoordinates();
+    return true;
 }
 
 void MainWindow::simpleDesign()

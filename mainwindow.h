@@ -91,9 +91,10 @@ private slots:
     void updateCoordinates();
     void openData();
     void openCsvFile();
+    bool checkData(QList<QStringList> &values);
     void prepareDesign(std::vector<std::vector<std::string> > &values);
     void prepareDesign(QList<QStringList> &values);
-    void setupChannelData(QList<QStringList> values);
+    bool setupChannelData(QList<QStringList> values);
     void simpleDesign();
     void performStabilityAnalysis();
     void createTextReport();

@@ -261,15 +261,13 @@ bool ChannelSection::checkCoordinates()
         return false;
     }
 
-    // Negative values are not allowed
+    // Negative values are not allowed in y-axis values
+    // Should negative values be allowed in x-axis value?
     for (size_t i=0; i < _coordY.size(); i++) {
-        if (_coordY.at(i) < 0)
+        if (_coordY.at(i) < 0 || _coordX.at(i) < 0)
             return false;
     }
-    for (size_t i=0; i < _coordX.size(); i++) {
-        if (_coordX.at(i) < 0)
-            return false;
-    }
+
 
     // Check if the x-axis coordinates are sorted from top to bottom
     // Which means the x-axis start from left to right (or right to left?)
