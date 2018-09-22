@@ -394,7 +394,7 @@ bool MainWindow::checkData(QList<QStringList> &values)
 {
     QMessageBox msgBox;
     msgBox.setWindowTitle(tr("Empty data"));
-    msgBox.setText(tr("Data is entirely empty or has empty values! Cannot continue."));
+    msgBox.setText(tr("Data has empty values! Maybe wrong delimiter is selected?"));
     msgBox.setInformativeText(tr("Please check data, it should be numeric data in two columns separated by comma or tabs."));
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
@@ -409,11 +409,16 @@ bool MainWindow::checkData(QList<QStringList> &values)
     // Empty lines or not enougth columns
     foreach (QStringList line, values) {
 
+        // Complety empy lines
         if (line.isEmpty()) {
+            qDebug() << "Empty line found.";
             msgBox.exec();
             return false;
         }
-        if (line.size() == 1 && line.at(0).isEmpty()) {
+
+        // Look for lines with at least two columns
+        if (line.size() < COORD_SIZE) {
+            qDebug() << "A line with not enough columns was found.";
             msgBox.exec();
             return false;
         }
@@ -423,7 +428,7 @@ bool MainWindow::checkData(QList<QStringList> &values)
     if (values.size() < MIN_DATA) {
         // Not enough data
         QMessageBox msg;
-        msg.setWindowTitle(tr("Not enough data"));
+        msg.setWindowTitle(tr("Not enough data."));
         msg.setText(tr("Not enough data to continue."));
         msg.setInformativeText(tr("A valid channel cross section should have at least 3 pairs of coordinates"));
         msg.setIcon(QMessageBox::Warning);
