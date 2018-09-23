@@ -718,9 +718,9 @@ void MainWindow::simpleDesign()
             // Another error just raised
             qDebug() << "Error: missing data, cannot complete design!";
             QMessageBox msgBox;
-            msgBox.setWindowTitle(tr("Incomplete design"));
-            msgBox.setText(tr("Design is not complete. Runoff, weir or other data is missing."));
-            msgBox.setInformativeText(tr("Dimensions of the dam cannot be created with missing data. Provide complete data and try again."));
+            msgBox.setWindowTitle(tr("Error in design"));
+            msgBox.setText(tr("Design is not complete. Some required data (runoff, weir, etc.) is missing or incorrect."));
+            msgBox.setInformativeText(tr("Dimensions of the dam cannot be created with missing or incorrect data. Please provide complete data and try again."));
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.setDefaultButton(QMessageBox::Ok);
             msgBox.setIcon(QMessageBox::Warning);
@@ -973,7 +973,6 @@ void MainWindow::updatePanelAndTextResults()
     QString textCentral = stability->centralCondition() ? "true" : "false";
     QString textOverturn = stability->overturnCondition() ? "true" : "false";
     QString textThird = stability->thirdCondition() ? "true" : "false";
-
 
     QStringList properties;
     QStringList values;
