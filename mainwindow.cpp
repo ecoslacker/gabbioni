@@ -300,6 +300,7 @@ void MainWindow::openData()
 
     DataDialog dataDlg;
     if (dataDlg.exec() == QDialog::Accepted) {
+        qDebug() << "Dialog accepted, proceed with design.";
         QList<QStringList> inputdata;
 
         // Get the data from dialog, ignore emty cells
@@ -336,8 +337,11 @@ void MainWindow::openData()
         }
 
         // Check the data and initialize the design
-        if (!checkData(inputdata))
-            prepareDesign(inputdata);
+        if (!checkData(inputdata)) {
+            qDebug() << "Error: data is invalid.";
+            return;
+        }
+        prepareDesign(inputdata);
 
     } else {
         qDebug() << "Data imput canceled by user!";
@@ -379,8 +383,10 @@ void MainWindow::openCsvFile()
     QList<QStringList> inputdata;
     inputdata = CSV::parseFromFile(fileName, "UTF-8", delimiter);
 
-    if (!checkData(inputdata))
+    if (!checkData(inputdata)) {
+        qDebug() << "Error: data is invalid.";
         return;
+    }
 
     // Process the data and initialize the design
     prepareDesign(inputdata);
@@ -392,6 +398,8 @@ void MainWindow::openCsvFile()
 
 bool MainWindow::checkData(QList<QStringList> &values)
 {
+    qDebug() << "Checking for valid data: " << values;
+
     QMessageBox msgBox;
     msgBox.setWindowTitle(tr("Empty data"));
     msgBox.setText(tr("Data has empty values! Maybe wrong delimiter is selected?"));
@@ -486,7 +494,7 @@ void MainWindow::prepareDesign(QList<QStringList> &values)
      *
      */
 
-    qDebug() << "Contents:\n" << values;
+    qDebug() << "Preparing design with data:\n" << values;
 
     // Reinitialize the weir, gabion dam and stability analysis
     restartProject();
