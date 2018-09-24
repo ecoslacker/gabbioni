@@ -234,8 +234,8 @@ bool GabionDam::checkSpillwayLimits()
 
     // Limits
     _spillwayBottomLevel = _levels - _weirLevels;
-    _leftSpillwayLimit = _leftX.at(_spillwayBottomLevel);
-    _rightSpillwayLimit = _rigthX.at(_spillwayBottomLevel);
+    _leftSpillwayLimit = _leftX.at(size_t(_spillwayBottomLevel));
+    _rightSpillwayLimit = _rigthX.at(size_t(_spillwayBottomLevel));
 
     // Dimensions of the spillway
     _spillwayLeftX = _channelSection->streambed() - (_weir->width() / 2);
@@ -318,16 +318,16 @@ bool GabionDam::createSpillway()
         std::cout << "Spilway right layer: " << i << " of " << _levels << std::endl;
 
         // Get width of the right spillway layer, before shrink the current layer
-        double w = (_layers.at(i).x() + _layers.at(i).width()) - _spillwayRightX;
+        double w = (_layers.at(size_t(i)).x() + _layers.at(size_t(i)).width()) - _spillwayRightX;
 
         // Shrink layer's width to create the spillway's left side or abutment
-        _layers.at(i).setWidth(_spillwayLeftX - _layers.at(i).x());
+        _layers.at(size_t(i)).setWidth(_spillwayLeftX - _layers.at(size_t(i)).x());
 
         // Create the other dimensions of the right side layer
-        double l = _layers.at(i).length();
-        double h = _layers.at(i).height();
+        double l = _layers.at(size_t(i)).length();
+        double h = _layers.at(size_t(i)).height();
         double x = _spillwayRightX;
-        double y = _layers.at(i).y();
+        double y = _layers.at(size_t(i)).y();
 
         Layer rightLayer(l, w, h, x, y);
         rightLayers.push_back(rightLayer);
@@ -364,13 +364,13 @@ bool GabionDam::createDimensions()
     checkParameterValues();
 
     // Check that channel cross-section exists
-    if (_channelSection == NULL) {
+    if (_channelSection == nullptr) {
         std::cout << " * Creating dimensions: ChannelSection object is null." << std::endl;
         return false;
     }
 
     // Check that the weir exists
-    if (_weir == NULL) {
+    if (_weir == nullptr) {
         std::cout << " * Creating dimensions: Weir object is null." << std::endl;
         return false;
     }
@@ -397,22 +397,11 @@ bool GabionDam::createDimensions()
 
         std::cout << " * Creating layer: " << i << " of " << _channelSection->levels() << std::endl;
 
-        //double max_dim = (_levels+1) * _channelSection->layersHeight(); // WARNING! Levels should be increased by 1
-        //double max_dim = (_levels + 1) * _stepLen;
-
-        double x = _channelSection->leftX().at(i) - _abutment;
-        double y = _channelSection->depthLevels().at(i);
+        double x = _channelSection->leftX().at(size_t(i)) - _abutment;
+        double y = _channelSection->depthLevels().at(size_t(i));
         double h = _channelSection->layersHeight();
-        double w = _channelSection->widths().at(i) + (_abutment * F_ABUTMENT);
-        //double l = max_dim - (_channelSection->layersHeight() * i); // This was the old way
-        //double l = max_dim - (_stepLen * i);
+        double w = _channelSection->widths().at(size_t(i)) + (_abutment * F_ABUTMENT);
         double l = _channelSection->layersHeight();
-
-//        // Add the stilling basin length to the base layer
-//        if (i == 0)
-//            l += _basinLen;
-
-        //std::cout << l << "\t" << w << "\t" << h << "\t" << x << "\t" << y << "\t" << std::endl;
 
         // Create a new layer
         Layer _newLayer(l, w, h, x, y);
@@ -440,11 +429,11 @@ bool GabionDam::createDimensions()
         }
 
         // Set the length to the current layer according to step configuration
-        _layers.at(i).setLength(currentLength);
+        _layers.at(size_t(i)).setLength(currentLength);
 
         // Add the stilling basin length to the base layer
         if (i == 0)
-            _layers.at(i).setLength(_channelSection->layersHeight() + (_stepLen * j) + _basinLen);
+            _layers.at(size_t(i)).setLength(_channelSection->layersHeight() + (_stepLen * j) + _basinLen);
     }
 
     // Finally create an spillway using weir dimensions (this block is pure logic!)
@@ -459,11 +448,11 @@ bool GabionDam::createDimensions()
     }
 
     // Adjust dimensions of the bottom layers to cover at least the weir
-    //std::cout << "Adjust layers from bottom to " << _layers.size() - _weirLayers << std::endl;
-    for (size_t i=0; i < (_layers.size() - _weirLayers); i++) {
+    //std::cout << "Adjust layers from bottom to " << _layers.size() - size_t(_weirLayers) << std::endl;
+    for (size_t i=0; i < (_layers.size() - size_t(_weirLayers)); i++) {
         if (_layers.at(i).x() > _spillwayLeftX) {
             //std::cout << "Adjust layer " << i << " from left side." << std::endl;
-            double diff = abs(_layers.at(i).x() - _spillwayLeftX);
+            double diff = std::abs(_layers.at(i).x() - _spillwayLeftX);
             //std::cout << "Width: " << _layers.at(i).width() << " diff: " << diff << std::endl;
             double w = _layers.at(i).width() + diff; // New width
 
@@ -474,7 +463,7 @@ bool GabionDam::createDimensions()
 
         if ((_layers.at(i).x() + _layers.at(i).width()) < _spillwayRightX) {
             //std::cout << "Adjust layer " << i << " from right side." << std::endl;
-            double diff = abs(_spillwayRightX - (_layers.at(i).x() + _layers.at(i).width()));
+            double diff = std::abs(_spillwayRightX - (_layers.at(i).x() + _layers.at(i).width()));
             double w = _layers.at(i).width() + diff; // New width
             _layers.at(i).setWidth(w);
         }
@@ -482,7 +471,7 @@ bool GabionDam::createDimensions()
 
     // Get the effective height, discard bottom and weir layers
     _effectiveHeight = 0;
-    for (size_t i=0; i < _layers.size() - _weirLayers; i++) {
+    for (size_t i=0; i < _layers.size() - size_t(_weirLayers); i++) {
         if (i != 0)
             _effectiveHeight += _layers.at(i).height();
     }
